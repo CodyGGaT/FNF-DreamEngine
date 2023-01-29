@@ -134,7 +134,6 @@ class PlayState extends MusicBeatState
 
 	var talking:Bool = true;
 	var songScore:Int = 0;
-	var songMisses:Int = 0;
 	var scoreTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
@@ -1656,7 +1655,6 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = "Score:" + songScore;
-		+ ' | Combo Breaks: ' + songMisses
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
@@ -1981,7 +1979,6 @@ class PlayState extends MusicBeatState
 		if (isStoryMode)
 		{
 			campaignScore += songScore;
-			campaignMisses += songMisses;
 
 			storyPlaylist.remove(storyPlaylist[0]);
 
