@@ -155,7 +155,7 @@ class ChartingState extends MusicBeatState
 			{name: "Note", label: 'Note'}
 		];
 
-		UI_box = new FlxUITabMenu(null, null, tabs, null, true);
+		UI_box = new FlxUITabMenu(null, tabs, true);
 
 		UI_box.resize(300, 400);
 		UI_box.x = FlxG.width / 2;
@@ -238,7 +238,6 @@ class ChartingState extends MusicBeatState
 			_song.player2 = characters[Std.parseInt(character)];
 			updateHeads();
 		});
-
 		player2DropDown.selectedLabel = _song.player2;
 
 		var tab_group_song = new FlxUI(null, UI_box);
@@ -478,7 +477,7 @@ class ChartingState extends MusicBeatState
 		_song.song = typingShit.text;
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
-		
+
 		if (FlxG.keys.justPressed.X)
 			toggleAltAnimNote();
 
@@ -963,15 +962,16 @@ class ChartingState extends MusicBeatState
 	{
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
-		// var noteSus = 0;
+		var noteSus = 0;
+		var noteAlt = false;
 
-		_song.notes[curSection].sectionNotes.push([noteStrum, noteData, 0, false]);
+		_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteAlt]);
 
 		curSelectedNote = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 
 		if (FlxG.keys.pressed.CONTROL)
 		{
-			_song.notes[curSection].sectionNotes.push([noteStrum, (noteData + 4) % 8, 0, false]);
+			_song.notes[curSection].sectionNotes.push([noteStrum, (noteData + 4) % 8, noteSus, noteAlt]);
 		}
 
 		trace(noteStrum);
@@ -1038,7 +1038,7 @@ class ChartingState extends MusicBeatState
 	function loadJson(song:String):Void
 	{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
-		FlxG.resetState();
+		LoadingState.loadAndSwitchState(new ChartingState());
 	}
 
 	function loadAutosave():Void
