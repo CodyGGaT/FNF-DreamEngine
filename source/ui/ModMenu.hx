@@ -109,6 +109,7 @@ class ModMenu extends ui.OptionsState.Page
 
 		enabledMods = [];
 
+
 		trace(modList);
 
 		var loopNum:Int = 0;

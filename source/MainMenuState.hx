@@ -94,6 +94,14 @@ class MainMenuState extends MusicBeatState
 		menuItems.createItem('story mode', function() startExitState(new StoryMenuState()));
 		menuItems.createItem('freeplay', function() startExitState(new FreeplayState()));
 		// addMenuItem('options', function () startExitState(new OptionMenu()));
+		#if CAN_OPEN_LINKS
+		var hasPopupBlocker = #if web true #else false #end;
+
+		if (VideoState.seenVideo)
+			menuItems.createItem('kickstarter', selectDonate, hasPopupBlocker);
+		else
+			menuItems.createItem('donate', selectDonate, hasPopupBlocker);
+		#end
 		menuItems.createItem('options', function() startExitState(new OptionsState()));
 		// #if newgrounds
 		// 	if (NGio.isLoggedIn)
@@ -120,6 +128,8 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
+		versionShit.text += '(Newgrounds exclusive preview)';
 
 		// NG.core.calls.event.logEvent('swag').send();
 

@@ -235,7 +235,7 @@ class PlayState extends MusicBeatState
 				add(halloweenBG);
 
 				isHalloween = true;
-			case 'pico' | 'blammed' | 'philly-nice':
+			case 'pico' | 'blammed' | 'philly':
 				curStage = 'philly';
 
 				var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('philly/sky'));
@@ -829,7 +829,11 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
+		if (PreferencesMenu.getPref('heatlthbar-colors')){
 		healthBar.createFilledBar(dad.hpColor, boyfriend.hpColor);
+		} else {
+			healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		}
 		// healthBar
 		add(healthBar);
 

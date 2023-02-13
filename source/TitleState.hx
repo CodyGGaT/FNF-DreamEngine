@@ -55,7 +55,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
-
+	var bg:FlxSprite;
 	var curWacky:Array<String> = [];
 	var wackyImage:FlxSprite;
 	var lastBeat:Int = 0;
@@ -206,7 +206,7 @@ class TitleState extends MusicBeatState
 
 		FlxG.stage.removeChild(overlay);
 	}
-	var bg:FlxSprite;
+
 	var logoBl:FlxSprite;
 
 	var gfDance:FlxSprite;
@@ -237,7 +237,7 @@ class TitleState extends MusicBeatState
 		persistentUpdate = true;
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.setGraphicSize(Std.int(bg.width * 1.1));
+		bg.setGraphicSize(Std.int(bg.width * 1.1)); //replace the TitleBG with your image
 		bg.screenCenter();
 
 		add(bg);

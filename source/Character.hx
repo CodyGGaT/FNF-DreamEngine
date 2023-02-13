@@ -21,6 +21,7 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 	public var hpColor:FlxColor;
+
 	public var animationNotes:Array<Dynamic> = [];
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
@@ -337,10 +338,10 @@ class Character extends FlxSprite
 				quickAnimAdd('singDOWNmiss', 'BF DOWN MISS');
 
 				loadOffsetFile(curCharacter);
-				hpColor = 0xFF7bd6f6;
+
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
-
+				hpColor = 0xFF7bd6f6;
 				playAnim('idle');
 
 				width -= 100;
@@ -358,14 +359,14 @@ class Character extends FlxSprite
 				animation.play('firstDeath');
 
 				loadOffsetFile(curCharacter);
-
+				hpColor = 0xFF7bd6f6;
 				playAnim('firstDeath');
 				// pixel bullshit
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
 				antialiasing = false;
 				flipX = true;
-				hpColor = 0xFF7bd6f6;
+
 			case 'bf-holding-gf-dead':
 				frames = Paths.getSparrowAtlas('characters/bfHoldingGF-DEAD');
 				quickAnimAdd('singUP', 'BF Dead with GF Loop');
@@ -426,10 +427,10 @@ class Character extends FlxSprite
 				quickAnimAdd('singDOWN', "spirit down_");
 
 				loadOffsetFile(curCharacter);
-				hpColor = 0xFFff3c6e;
+
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
-
+				updateHitbox();
 				playAnim('idle');
 
 				antialiasing = false;
