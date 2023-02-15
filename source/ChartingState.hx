@@ -119,6 +119,7 @@ class ChartingState extends MusicBeatState
 				needsVoices: true,
 				player1: 'bf',
 				player2: 'dad',
+				gfVersion: 'gf',
 				speed: 1,
 				validScore: false
 			};
@@ -239,6 +240,11 @@ class ChartingState extends MusicBeatState
 			updateHeads();
 		});
 		player2DropDown.selectedLabel = _song.player2;
+		var gfVersionDropDown = new FlxUIDropDownMenu(10, 120, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+			{
+				_song.gfVersion = characters[Std.parseInt(character)];
+			});
+			gfVersionDropDown.selectedLabel = _song.gfVersion;
 
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
@@ -249,6 +255,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
+		tab_group_song.add(gfVersionDropDown);
 		tab_group_song.add(loadAutosaveBtn);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
