@@ -144,8 +144,6 @@ class PreferencesMenu extends ui.OptionsState.Page
 			case 'auto-pause':
 				FlxG.autoPause = getPref('auto-pause');
 		}
-
-		if (prefName == 'fps-counter') {}
 	}
 
 	override function update(elapsed:Float)

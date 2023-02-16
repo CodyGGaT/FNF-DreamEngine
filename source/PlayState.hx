@@ -135,6 +135,7 @@ class PlayState extends MusicBeatState
 
 	var talking:Bool = true;
 	var songScore:Int = 0;
+	var songMisses:Int = 0;
 	var scoreTxt:FlxText;
 
 	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
@@ -918,14 +919,6 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				// REMOVE THIS LATER
-				// case 'ugh':
-				// 	ughIntro();
-				// case 'stress':
-				// 	stressIntro();
-				// case 'guns':
-				// 	gunsIntro();
-
 				default:
 					startCountdown();
 			}
@@ -936,27 +929,7 @@ class PlayState extends MusicBeatState
 
 	function ughIntro()
 	{
-		inCutscene = true;
-
-		var blackShit:FlxSprite = new FlxSprite(-200, -200).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		blackShit.scrollFactor.set();
-		add(blackShit);
-
-		var vid:FlxVideo = new FlxVideo('music/ughCutscene.mp4');
-		vid.finishCallback = function()
-		{
-			remove(blackShit);
-			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
-			startCountdown();
-			cameraMovement();
-		};
-
-		FlxG.camera.zoom = defaultCamZoom * 1.2;
-
-		camFollow.x += 100;
-		camFollow.y += 100;
-
-		/* 
+			inCutscene = true;
 			FlxG.sound.playMusic(Paths.music('DISTORTO'), 0);
 			FlxG.sound.music.fadeIn(5, 0, 0.5);
 
@@ -974,7 +947,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom *= 1.2;
 			camFollow.y += 100;
 
-			tankCutscene.startSyncAudio = FlxG.sound.load(Paths.sound('wellWellWell'));
+			FlxG.sound.play((Paths.sound('wellWellWell')));
 
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
@@ -1017,28 +990,14 @@ class PlayState extends MusicBeatState
 						camHUD.visible = true;
 					});
 				});
-		});*/
+		});
 	}
 
 	function gunsIntro()
 	{
 		inCutscene = true;
 
-		var blackShit:FlxSprite = new FlxSprite(-200, -200).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		blackShit.scrollFactor.set();
-		add(blackShit);
-
-		var vid:FlxVideo = new FlxVideo('music/gunsCutscene.mp4');
-		vid.finishCallback = function()
-		{
-			remove(blackShit);
-
-			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
-			startCountdown();
-			cameraMovement();
-		};
-
-		/* camFollow.setPosition(camPos.x, camPos.y);
+		camFollow.setPosition(camPos.x, camPos.y);
 
 			camHUD.visible = false;
 
@@ -1057,7 +1016,7 @@ class PlayState extends MusicBeatState
 			tankCutscene.antialiasing = true;
 			gfCutsceneLayer.add(tankCutscene); // add();
 
-			tankCutscene.startSyncAudio = FlxG.sound.load(Paths.sound('tankSong2'));
+			FlxG.sound.play(Paths.sound('tankSong2'));
 
 			new FlxTimer().start(4.1, function(ugly:FlxTimer)
 			{
@@ -1080,7 +1039,7 @@ class PlayState extends MusicBeatState
 				});
 
 				camHUD.visible = true;
-		});*/
+		});
 	}
 
 	/**
@@ -1098,21 +1057,7 @@ class PlayState extends MusicBeatState
 	{
 		inCutscene = true;
 
-		var blackShit:FlxSprite = new FlxSprite(-200, -200).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		blackShit.scrollFactor.set();
-		add(blackShit);
-
-		var vid:FlxVideo = new FlxVideo('music/stressCutscene.mp4');
-		vid.finishCallback = function()
-		{
-			remove(blackShit);
-
-			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
-			startCountdown();
-			cameraMovement();
-		};
-
-		/* camHUD.visible = false;
+		camHUD.visible = false;
 
 			// for story mode shit
 			camFollow.setPosition(camPos.x, camPos.y);
@@ -1192,10 +1137,10 @@ class PlayState extends MusicBeatState
 			bfCatchGf.visible = false;
 
 			if (PreferencesMenu.getPref('censor-naughty'))
-				tankCutscene.startSyncAudio = FlxG.sound.play(Paths.sound('stressCutscene'));
+				FlxG.sound.play(Paths.sound('stressCutscene'));
 			else
 			{
-				tankCutscene.startSyncAudio = FlxG.sound.play(Paths.sound('song3censor'));
+				FlxG.sound.play(Paths.sound('song3censor'));
 				// cutsceneSound.loadEmbedded(Paths.sound('song3censor'));
 
 				var censor:FlxSprite = new FlxSprite();
@@ -1345,7 +1290,7 @@ class PlayState extends MusicBeatState
 
 					gfCutsceneLayer.remove(cutsceneShit);
 				});
-		});*/
+		});
 	}
 
 	function initDiscord():Void
@@ -1925,7 +1870,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
+		scoreTxt.text = "Score:" + songScore + " Misses:" + songMisses + " Combo:" + combo;
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
@@ -1995,7 +1940,6 @@ class PlayState extends MusicBeatState
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
-		#if debug
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
 		if (FlxG.keys.justPressed.EIGHT)
@@ -2011,12 +1955,7 @@ class PlayState extends MusicBeatState
 			else
 				FlxG.switchState(new AnimationDebug(SONG.player2));
 		}
-		if (FlxG.keys.justPressed.PAGEUP)
-			changeSection(1);
-		if (FlxG.keys.justPressed.PAGEDOWN)
-			changeSection(-1);
-		#end
-
+		
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
 		{
 			cameraRightSide = SONG.notes[Std.int(curStep / 16)].mustHitSection;
@@ -2092,7 +2031,7 @@ class PlayState extends MusicBeatState
 				vocals.stop();
 				FlxG.sound.music.stop();
 
-				// unloadAssets();
+				//unloadAssets();
 
 				deathCounter += 1;
 
@@ -2238,6 +2177,7 @@ class PlayState extends MusicBeatState
 					if (daNote.tooLate)
 					{
 						health -= 0.0475;
+						songMisses++;
 						vocals.volume = 0;
 						killCombo();
 					}
@@ -2748,8 +2688,10 @@ class PlayState extends MusicBeatState
 
 	function noteMiss(direction:Int = 1):Void
 	{
+		if (!PreferencesMenu.getPref('ghost-tapping')){
 		// whole function used to be encased in if (!boyfriend.stunned)
 		health -= 0.04;
+		songMisses++;
 		killCombo();
 
 		if (!practiceMode)
@@ -2778,6 +2720,7 @@ class PlayState extends MusicBeatState
 				boyfriend.playAnim('singRIGHTmiss', true);
 		}
 	}
+}
 
 	/* not used anymore lol
 

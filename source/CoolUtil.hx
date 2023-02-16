@@ -63,4 +63,7 @@ class CoolUtil
 	{
 		return FlxMath.lerp(a, b, camLerpShit(ratio));
 	}
+
+	public static function coolStringFile(path:String):Array<String>
+		return [for (line in path.trim().split('\n')) line.trim()];
 }

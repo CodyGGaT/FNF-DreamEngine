@@ -41,14 +41,21 @@ class AnimationDebug extends FlxState
 		FlxG.sound.music.stop();
 
 		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
-		gridBG.scrollFactor.set(0.5, 0.5);
+		gridBG.scrollFactor.set(0, 0);
 		add(gridBG);
 
-		if (daAnim == 'bf')
+		if (daAnim.startsWith('bf'))
 			isDad = false;
 
 		if (isDad)
 		{
+			var dads = new Character(0, 0, daAnim);
+			dads.color = 0xff000000;
+			dads.alpha = 0.3;
+			dads.screenCenter();
+			dads.debugMode = true;
+			add(dads);
+
 			dad = new Character(0, 0, daAnim);
 			dad.screenCenter();
 			dad.debugMode = true;
@@ -59,7 +66,14 @@ class AnimationDebug extends FlxState
 		}
 		else
 		{
-			bf = new Boyfriend(0, 0);
+			var bfs = new Character(0, 0, daAnim);
+			bfs.color = 0xff000000;
+			bfs.alpha = 0.3;
+			bfs.screenCenter();
+			bfs.debugMode = true;
+			add(bfs);
+			
+			bf = new Boyfriend(0, 0, daAnim);
 			bf.screenCenter();
 			bf.debugMode = true;
 			add(bf);

@@ -16,12 +16,6 @@ class TankCutscene extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (animation.curAnim.curFrame >= 1 && !startedPlayingSound)
-		{
-			startSyncAudio.play();
-			startedPlayingSound = true;
-		}
-
 		super.update(elapsed);
 	}
 }

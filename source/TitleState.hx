@@ -69,9 +69,28 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod'], framework: OPENFL});
-		// FlxG.bitmap.clearCache();
+		#if desktop
+		var mods = CoolUtil.coolStringFile(sys.io.File.getContent('./mods/modList.txt'));
+
+		trace(mods);
+
+		polymod.Polymod.init({
+			modRoot: "mods",
+			dirs: mods,
+			errorCallback: (e) -> {
+				trace(e.message);
+			},
+			frameworkParams: {
+				assetLibraryPaths: [
+					"songs" => "assets/songs",
+					"images" => "assets/images",
+					"data" => "assets/data",
+					"fonts" => "assets/fonts",
+					"sounds" => "assets/sounds",
+					"music" => "assets/music",
+				]
+			}
+		});
 		#end
 
 		startedIntro = false;
