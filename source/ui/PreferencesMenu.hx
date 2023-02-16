@@ -32,12 +32,15 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 		createPrefItem('naughtyness', 'censor-naughty', true);
 		createPrefItem('downscroll', 'downscroll', false);
+		createPrefItem('middlescroll', 'middlescroll', false);
 		createPrefItem('flashing menu', 'flashing-menu', true);
 		createPrefItem('Camera Zooming on Beat', 'camera-zoom', true);
 		createPrefItem('FPS Counter', 'fps-counter', true);
 		createPrefItem('Auto Pause', 'auto-pause', true);
 		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors', true);
 		createPrefItem('Ghost Tapping', 'ghost-tapping', true);
+		createPrefItem('Botplay', 'botplay', false);
+		createPrefItem('Play As Opponent', 'opm', false);
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -69,6 +72,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 	{
 		preferenceCheck('censor-naughty', true);
 		preferenceCheck('downscroll', false);
+		preferenceCheck('middlescroll', false);
 		preferenceCheck('flashing-menu', true);
 		preferenceCheck('camera-zoom', true);
 		preferenceCheck('fps-counter', true);
@@ -76,6 +80,8 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('master-volume', 1);
 		preferenceCheck('heatlthbar-colors', true);
 		preferenceCheck('ghost-tapping', true);
+		preferenceCheck('botplay', false);
+		preferenceCheck('opm', false);
 
 		#if muted
 		setPref('master-volume', 0);
