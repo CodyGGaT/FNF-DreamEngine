@@ -489,7 +489,7 @@ class Character extends FlxSprite
 				quickAnimAdd('singUP-alt', 'TANKMAN UGH');
 
 				loadOffsetFile(curCharacter);
-				hpColor = 0xFFFFFFFF;
+				hpColor = 0xFFFBAA25;
 				playAnim('idle');
 
 				flipX = true;
