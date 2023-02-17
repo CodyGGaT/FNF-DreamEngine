@@ -1,5 +1,6 @@
 package;
 
+import openfl.Assets;
 import flixel.FlxSprite;
 
 using StringTools;
@@ -39,14 +40,17 @@ class HealthIcon extends FlxSprite
 
 	public function changeIcon(newChar:String):Void
 	{
-		if (newChar != 'bf-pixel' && newChar != 'bf-old')
+		if (newChar != 'bf-pixel' && newChar != 'bf-old' && newChar != 'senpai-angry')
 			newChar = newChar.split('-')[0].trim();
 
 		if (newChar != char)
 		{
 			if (animation.getByName(newChar) == null)
 			{
-				loadGraphic(Paths.image('icons/icon-' + newChar), true, 150, 150);
+				if (Assets.exists(Paths.image('icons/icon-' + newChar)))
+					loadGraphic(Paths.image('icons/icon-' + newChar), true, 150, 150);
+				else
+					loadGraphic(Paths.image('icons/icon-face'), true, 150, 150);
 				animation.add(newChar, [0, 1], 0, false, isPlayer);
 			}
 			animation.play(newChar);

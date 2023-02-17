@@ -226,6 +226,7 @@ class ChartingState extends MusicBeatState
 		stepperBPM.name = 'song_bpm';
 
 		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
+		var charactersGf:Array<String> = CoolUtil.coolTextFile(Paths.txt('gfVersionList'));
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -240,9 +241,9 @@ class ChartingState extends MusicBeatState
 			updateHeads();
 		});
 		player2DropDown.selectedLabel = _song.player2;
-		var gfVersionDropDown = new FlxUIDropDownMenu(10, 120, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		var gfVersionDropDown = new FlxUIDropDownMenu(10, 120, FlxUIDropDownMenu.makeStrIdLabelArray(charactersGf, true), function(character:String)
 			{
-				_song.gfVersion = characters[Std.parseInt(character)];
+				_song.gfVersion = charactersGf[Std.parseInt(character)];
 			});
 			gfVersionDropDown.selectedLabel = _song.gfVersion;
 

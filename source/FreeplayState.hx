@@ -63,12 +63,6 @@ class FreeplayState extends MusicBeatState
 
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 
-		for (i in 0...initSonglist.length)
-		{
-			songs.push(new SongMetadata(initSonglist[i], 1, 'gf'));
-			trace(initSonglist[i]);
-		}
-
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
@@ -91,10 +85,22 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
 
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
-			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
+			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai-angry', 'spirit']);
 
 		if (StoryMenuState.weekUnlocked[7] || isDebug)
 			addWeek(['Ugh', 'Guns', 'Stress'], 7, ['tankman']);
+
+		if (openfl.Assets.exists(Paths.txt('freeplaySonglist'))){
+			for (i in 0...initSonglist.length)
+			{
+				var data:Array<String> = initSonglist[i].split(':');
+				var songId = data[0];
+
+				addSong(songId, Std.parseInt(data[1]), data[2]);
+
+				trace(songId + Std.parseInt(data[1]) + data[2]);
+			}
+	}
 
 		// LOAD MUSIC
 

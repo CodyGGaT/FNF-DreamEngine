@@ -1,5 +1,6 @@
 package;
 
+import openfl.Assets;
 import Section.SwagSection;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -34,6 +35,9 @@ class Character extends FlxSprite
 
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
+		#if sys
+		var script:HScript;
+		#end
 
 		switch (curCharacter)
 		{
@@ -489,6 +493,18 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+			default:
+				{
+					#if sys
+					script = new HScript('characters/$curCharacter');
+					if (!script.isBlank && script.expr != null)
+					{
+						script.interp.scriptObject = this;
+						script.interp.execute(script.expr);
+					}
+					script.callFunction("create");
+					#end
+				}
 		}
 
 		dance();
@@ -519,22 +535,27 @@ class Character extends FlxSprite
 
 	public function loadMappedAnims()
 	{
-		var swagshit = Song.loadFromJson('picospeaker', 'stress');
-
-		var notes = swagshit.notes;
-
-		for (section in notes)
+		if (Assets.exists('assets/data/${PlayState.SONG.song.toLowerCase()}/picospeaker.json'))
 		{
-			for (idk in section.sectionNotes)
+			var swagshit = Song.loadFromJson('picospeaker', 'stress');
+
+			var notes = swagshit.notes;
+
+			for (section in notes)
 			{
-				animationNotes.push(idk);
+				for (idk in section.sectionNotes)
+				{
+					animationNotes.push(idk);
+				}
 			}
+
+			TankmenBG.animationNotes = animationNotes;
+
+			trace(animationNotes);
+			animationNotes.sort(sortAnims);
 		}
-
-		TankmenBG.animationNotes = animationNotes;
-
-		trace(animationNotes);
-		animationNotes.sort(sortAnims);
+		else
+			FlxG.game.stage.window.alert('hey pico speakers json is no fix now', 'why');
 	}
 
 	function sortAnims(val1:Array<Dynamic>, val2:Array<Dynamic>):Int
@@ -666,7 +687,7 @@ class Character extends FlxSprite
 	{
 		if (!animation.exists(AnimName))
 			return;
-		
+
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		var daOffset = animOffsets.get(AnimName);

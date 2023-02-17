@@ -615,32 +615,19 @@ class PlayState extends MusicBeatState
 				add(stageCurtains);
 		}
 
-		var gfVersion:String = 'gf';
+		if (SONG.gfVersion == null)
+			SONG.gfVersion = 'gf';
 
-		switch (curStage)
-		{
-			case 'limo':
-				gfVersion = 'gf-car';
-			case 'mall' | 'mallEvil':
-				gfVersion = 'gf-christmas';
-			case 'school' | 'schoolEvil':
-				gfVersion = 'gf-pixel';
-			case 'tank':
-				gfVersion = 'gf-tankmen';
-		}
-
-		if (SONG.song.toLowerCase() == 'stress')
-			gfVersion = 'pico-speaker';
-
-		gf = new Character(400, 130, gfVersion);
+		gf = new Character(400, 130, SONG.gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 
-		switch (gfVersion)
+		switch (SONG.gfVersion)
 		{
 			case 'pico-speaker':
 				gf.x -= 50;
 				gf.y -= 200;
 
+				if (Assets.exists('assets/data/${SONG.song.toLowerCase()}/picospeaker.json')){
 				var tempTankman:TankmenBG = new TankmenBG(20, 500, true);
 				tempTankman.strumTime = 10;
 				tempTankman.resetShit(20, 600, true);
@@ -657,6 +644,10 @@ class PlayState extends MusicBeatState
 						tankmanRun.add(tankman);
 					}
 				}
+			}
+			case 'gf-tankmen':
+				gf.x -= 170;
+				gf.y -= 75;
 		}
 
 		dad = new Character(100, 100, SONG.player2);
@@ -739,12 +730,6 @@ class PlayState extends MusicBeatState
 				boyfriend.y += 0;
 				dad.y += 60;
 				dad.x -= 80;
-
-				if (gfVersion != 'pico-speaker')
-				{
-					gf.x -= 170;
-					gf.y -= 75;
-				}
 		}
 
 		add(gf);

@@ -84,10 +84,20 @@ class TitleState extends MusicBeatState
 				assetLibraryPaths: [
 					"songs" => "assets/songs",
 					"images" => "assets/images",
+					"shared" => "assets/shared",
 					"data" => "assets/data",
+					"characters" => "assets/characters",
 					"fonts" => "assets/fonts",
 					"sounds" => "assets/sounds",
 					"music" => "assets/music",
+					"tutorial" => "assets/tutorial",
+					"week1" => "assets/week1",
+					"week2" => "assets/week2",
+					"week3" => "assets/week3",
+					"week4" => "assets/week3",
+					"week5" => "assets/week4",
+					"week6" => "assets/week5",
+					"week7" => "assets/week6",
 				]
 			}
 		});
