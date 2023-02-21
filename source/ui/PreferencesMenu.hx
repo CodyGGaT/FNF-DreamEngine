@@ -41,6 +41,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('Ghost Tapping', 'ghost-tapping', true);
 		createPrefItem('Botplay', 'botplay', false);
 		createPrefItem('Play As Opponent', 'opm', false);
+		createPrefItem('Now Playing Bar', 'songbar', true);
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -82,6 +83,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('ghost-tapping', true);
 		preferenceCheck('botplay', false);
 		preferenceCheck('opm', false);
+		preferenceCheck('songbar', true);
 
 		#if muted
 		setPref('master-volume', 0);
