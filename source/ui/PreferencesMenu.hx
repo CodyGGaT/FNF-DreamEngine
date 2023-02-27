@@ -31,17 +31,21 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 		add(items = new TextMenuList());
 
-		createPrefItem('naughtyness', 'censor-naughty', true);
-		createPrefItem('downscroll', 'downscroll', false);
-		createPrefItem('middlescroll', 'middlescroll', false);
-		createPrefItem('flashing menu', 'flashing-menu', true);
-		createPrefItem('Camera Zooming on Beat', 'camera-zoom', true);
-		createPrefItem('FPS Counter', 'fps-counter', true);
-		createPrefItem('Auto Pause', 'auto-pause', true);
-		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors', true);
-		createPrefItem('Ghost Tapping', 'ghost-tapping', true);
-		createPrefItem('Botplay', 'botplay', false);
-		createPrefItem('Play As Opponent', 'opm', false);
+		createPrefItem('naughtyness', 'censor-naughty');
+		createPrefItem('downscroll', 'downscroll');
+		createPrefItem('middlescroll', 'middlescroll');
+		createPrefItem('Now Playing Bar', 'songbar');
+		createPrefItem('flashing menu', 'flashing-menu');
+		createPrefItem('Camera Zooming on Beat', 'camera-zoom');
+		createPrefItem('FPS Counter', 'fps-counter');
+		createPrefItem('Auto Pause', 'auto-pause');
+		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors');
+		createPrefItem('Ghost Tapping', 'ghost-tapping');
+		createPrefItem('Botplay', 'botplay');
+		createPrefItem('Play As Opponent', 'opm');
+		createPrefItem('WaterMark', 'wm');
+		createPrefItem('Freeplay Cutsenses', 'freecut');
+		createPrefItem('Debug Mode', 'debug');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -86,6 +90,10 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('ghost-tapping', true);
 		preferenceCheck('botplay', false);
 		preferenceCheck('opm', false);
+		preferenceCheck('wm', true);
+		preferenceCheck('freecut', false);
+		preferenceCheck('debug', false);
+		preferenceCheck('songbar', true);
 
 		#if muted
 		setPref('master-volume', 0);
