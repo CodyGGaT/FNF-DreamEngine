@@ -14,6 +14,7 @@ class OptionsState extends MusicBeatState
 	var pages = new Map<PageName, Page>();
 	var currentName:PageName = Options;
 	var currentPage(get, never):Page;
+	public static var wasPaused:Bool;
 
 	inline function get_currentPage()
 		return pages[currentName];
@@ -21,7 +22,7 @@ class OptionsState extends MusicBeatState
 	override function create()
 	{
 		var menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		menuBG.color = 0xFFea71fd;
+		menuBG.color = 0xff2c2c2c;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
@@ -95,9 +96,14 @@ class OptionsState extends MusicBeatState
 
 	function exitToMainMenu()
 	{
-		currentPage.enabled = false;
-		// Todo animate?
-		FlxG.switchState(new MainMenuState());
+		if (wasPaused){
+			FlxG.switchState(new PlayState());
+			wasPaused = false;
+		}else{
+			currentPage.enabled = false;
+			// Todo animate?
+			FlxG.switchState(new MainMenuState());
+		}
 	}
 }
 

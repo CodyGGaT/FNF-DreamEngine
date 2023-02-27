@@ -60,7 +60,7 @@ class LoadingState extends MusicBeatState
 			if (PlayState.SONG.needsVoices)
 				checkLoadSong(getVocalPath());
 			checkLibrary("shared");
-			if (PlayState.storyWeek > 0)
+			if ((openfl.Assets.exists('assets/week${PlayState.storyWeek}')))
 				checkLibrary("week" + PlayState.storyWeek);
 			else
 				checkLibrary("tutorial");

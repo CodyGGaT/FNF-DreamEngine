@@ -104,7 +104,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		switch (PlayState.storyWeek)
 		{
-			case 7:
+			case '7':
 				if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished && !playingDeathSound)
 				{
 					playingDeathSound = true;

@@ -1,5 +1,6 @@
 package;
 
+import flixel.ui.FlxButton;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -44,6 +45,23 @@ class AnimationDebug extends FlxState
 		gridBG.scrollFactor.set(0, 0);
 		add(gridBG);
 
+		var saveButton:FlxButton = new FlxButton(10, 10, "Save Offsets", function()
+		{
+			var outputString:String = "";
+
+			for (swagAnim in animList)
+			{
+				outputString += swagAnim + " " + char.animOffsets.get(swagAnim)[0] + " " + char.animOffsets.get(swagAnim)[1] + "\n";
+			}
+
+			outputString.trim();
+			saveOffsets(outputString);
+
+			FlxG.game.stage.window.alert(daAnim + "'s offsets have been saved");
+		});
+
+		add(saveButton);
+
 		if (daAnim.startsWith('bf'))
 			isDad = false;
 
@@ -62,7 +80,6 @@ class AnimationDebug extends FlxState
 			add(dad);
 
 			char = dad;
-			dad.flipX = false;
 		}
 		else
 		{
@@ -72,14 +89,12 @@ class AnimationDebug extends FlxState
 			bfs.screenCenter();
 			bfs.debugMode = true;
 			add(bfs);
-			
+
 			bf = new Boyfriend(0, 0, daAnim);
 			bf.screenCenter();
 			bf.debugMode = true;
 			add(bf);
-
 			char = bf;
-			bf.flipX = false;
 		}
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
@@ -211,15 +226,7 @@ class AnimationDebug extends FlxState
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
-			var outputString:String = "";
-
-			for (swagAnim in animList)
-			{
-				outputString += swagAnim + " " + char.animOffsets.get(swagAnim)[0] + " " + char.animOffsets.get(swagAnim)[1] + "\n";
-			}
-
-			outputString.trim();
-			saveOffsets(outputString);
+			FlxG.switchState(new PlayState());
 		}
 
 		super.update(elapsed);

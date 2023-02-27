@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.text.FlxText;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -30,17 +31,20 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 		add(items = new TextMenuList());
 
-		createPrefItem('naughtyness', 'censor-naughty', true);
-		createPrefItem('downscroll', 'downscroll', false);
-		createPrefItem('middlescroll', 'middlescroll', false);
-		createPrefItem('flashing menu', 'flashing-menu', true);
-		createPrefItem('Camera Zooming on Beat', 'camera-zoom', true);
-		createPrefItem('FPS Counter', 'fps-counter', true);
-		createPrefItem('Auto Pause', 'auto-pause', true);
-		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors', true);
-		createPrefItem('Ghost Tapping', 'ghost-tapping', true);
-		createPrefItem('Botplay', 'botplay', false);
-		createPrefItem('Play As Opponent', 'opm', false);
+		createPrefItem('naughtyness', 'censor-naughty');
+		createPrefItem('downscroll', 'downscroll');
+		createPrefItem('middlescroll', 'middlescroll');
+		createPrefItem('flashing menu', 'flashing-menu');
+		createPrefItem('Camera Zooming on Beat', 'camera-zoom');
+		createPrefItem('FPS Counter', 'fps-counter');
+		createPrefItem('Auto Pause', 'auto-pause');
+		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors');
+		createPrefItem('Ghost Tapping', 'ghost-tapping');
+		createPrefItem('Botplay', 'botplay');
+		createPrefItem('Play As Opponent', 'opm');
+		createPrefItem('WaterMark', 'wm');
+		createPrefItem('Freeplay Cutsenses', 'freecut');
+		createPrefItem('Debug Mode', 'debug');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -70,6 +74,9 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 	public static function initPrefs():Void
 	{
+		if (FlxG.save.data.preferences != null)
+			preferences = FlxG.save.data.preferences;
+
 		preferenceCheck('censor-naughty', true);
 		preferenceCheck('downscroll', false);
 		preferenceCheck('middlescroll', false);
@@ -82,6 +89,9 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('ghost-tapping', true);
 		preferenceCheck('botplay', false);
 		preferenceCheck('opm', false);
+		preferenceCheck('wm', true);
+		preferenceCheck('freecut', false);
+		preferenceCheck('debug', false);
 
 		#if muted
 		setPref('master-volume', 0);
@@ -94,13 +104,13 @@ class PreferencesMenu extends ui.OptionsState.Page
 		FlxG.autoPause = getPref('auto-pause');
 	}
 
-	private function createPrefItem(prefName:String, prefString:String, prefValue:Dynamic):Void
+	private function createPrefItem(prefName:String, prefString:String, prefValue:String = 'TBool'):Void
 	{
 		items.createItem(120, (120 * items.length) + 30, prefName, AtlasFont.Bold, function()
 		{
 			preferenceCheck(prefString, prefValue);
 
-			switch (Type.typeof(prefValue).getName())
+			switch prefValue
 			{
 				case 'TBool':
 					prefToggle(prefString);
@@ -110,10 +120,13 @@ class PreferencesMenu extends ui.OptionsState.Page
 			}
 		});
 
-		switch (Type.typeof(prefValue).getName())
+		switch prefValue
 		{
 			case 'TBool':
 				createCheckbox(prefString);
+
+			case 'IntThing':
+				trace(prefValue);
 
 			default:
 				trace('swag');
@@ -129,6 +142,8 @@ class PreferencesMenu extends ui.OptionsState.Page
 		add(checkbox);
 	}
 
+	function createIntThing(prefString:String){}
+
 	/**
 	 * Assumes that the preference has already been checked/set?
 	 */
@@ -143,13 +158,13 @@ class PreferencesMenu extends ui.OptionsState.Page
 		switch (prefName)
 		{
 			case 'fps-counter':
-				if (getPref('fps-counter'))
-					FlxG.stage.addChild(Main.fpsCounter);
-				else
-					FlxG.stage.removeChild(Main.fpsCounter);
+				Main.fpsCounter.visible = PreferencesMenu.getPref('fps-counter');
 			case 'auto-pause':
 				FlxG.autoPause = getPref('auto-pause');
 		}
+
+		FlxG.save.data.preferences = preferences;
+		FlxG.save.flush();
 	}
 
 	override function update(elapsed:Float)
@@ -173,6 +188,9 @@ class PreferencesMenu extends ui.OptionsState.Page
 		{
 			preferences.set(prefString, prefValue);
 			trace('set preference!');
+
+			FlxG.save.data.preferences = preferences;
+			FlxG.save.flush();
 		}
 		else
 		{
@@ -221,6 +239,26 @@ class CheckboxThingie extends FlxSprite
 		else
 			animation.play('static');
 
+		return value;
+	}
+}
+
+class IntOption extends FlxText
+{
+	public var daValue(default, set):Int;
+
+	public function new(x:Float, y:Float, daValue:Int = 0)
+	{
+		super(x, y);
+		this.daValue = daValue;
+
+		text = '$daValue';
+		
+		scale.set(1.5, 1.5);
+	}
+
+	function set_daValue(value:Int):Int
+	{
 		return value;
 	}
 }

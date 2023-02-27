@@ -1,5 +1,6 @@
 package;
 
+import lime.app.Application;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -14,7 +15,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import lime.app.Application;
 
 using StringTools;
 
@@ -82,7 +82,7 @@ class MainMenuState extends MusicBeatState {
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 33, 0, 'Dream Engine Version: ${Application.current.meta.get('version')}\nFriday Night Funkin Version: 0.2.8', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

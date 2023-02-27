@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Dream Engine" file="Dream Engine" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="0.2.8" company="ninjamuffin99" />
+	<app title="Friday Night Funkin': Dream Engine" file="Dream Engine" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="alpha 0.0.5" company="ninjamuffin99" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -123,15 +123,18 @@
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
-	<haxelib name="faxe" if='switch'/>
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
+	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
+    <haxedef name="HXCPP_STACK_LINE" if="release" />
+    <haxedef name="HXCPP_DEBUG_LINK" if="release" />
+	<haxedef name="hscriptPos" />
 	
 	<!-- <haxelib name="flixel-animate" /> -->
 	<!-- <haxelib name="spinehaxe" /> -->
 	<!-- https://github.com/ninjamuffin99/Flixel-Animate-Atlas-Player -->
 
 
-	<!--<haxelib name="discord_rpc" if="cpp"/> --> <!-- foesn't work with neko -->
+	<haxelib name="discord_rpc" if="cpp" unless = "neko"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
 	<!-- <haxelib name="markdown" /> -->

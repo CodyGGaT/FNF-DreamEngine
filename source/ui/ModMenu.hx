@@ -1,31 +1,52 @@
 package ui;
 
+import openfl.net.FileReference;
+import openfl.Assets;
 #if sys
 import sys.FileSystem;
+import sys.io.File;
 #end
-import Controls.Control;
 import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxSubState;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.input.keyboard.FlxKey;
-import flixel.system.FlxSound;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
+
+using StringTools;
 
 class ModMenu extends ui.OptionsState.Page
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['no'];
+	var menuItems:Array<String>;
+
+	public static var modsEnabled:Array<String> = [];
+
 	var curSelected:Int = 0;
 
 	public function new()
 	{
 		super();
+
+		#if html5
+		menuItems = ['imagine being on html5'];
+		#end
+
+		#if sys
+		if (FileSystem.exists('./mods'))
+		{
+			trace('mods loaded');
+			var modsInDaFolder = FileSystem.readDirectory('./mods');
+			if (modsInDaFolder == [''])
+				menuItems = ['no mods'];
+			else
+				menuItems = modsInDaFolder;
+		}
+		else
+		{
+			FileSystem.createDirectory('./mods');
+			FileSystem.createDirectory('./mods/introMod');
+			FlxG.game.stage.window.alert('hey we dont see a mods folder here so we made one for you', 'Dream Engine Crash Handler');
+			menuItems = ['no mods'];
+		}
+		#end
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -75,20 +96,55 @@ class ModMenu extends ui.OptionsState.Page
 		{
 			var daSelected:String = menuItems[curSelected];
 
-			switch (daSelected){
+			if (modsEnabled != null)
+			{
+				if (!modsEnabled.contains(daSelected))
+					modsEnabled.push(daSelected);
+				else
+					modsEnabled.remove(daSelected);
 			}
-		}
+			else
+				modsEnabled = [daSelected];
 
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
+			#if sys
+			File.saveContent('./mods/modList.txt', modsEnabled.toString());
+			#end
 		}
 	}
 
 	override function destroy()
 	{
 		super.destroy();
+		#if sys
+		polymod.Polymod.init({
+			modRoot: "mods",
+			dirs: CoolUtil.coolStringFile(sys.io.File.getContent('./mods/modList.txt')),
+			errorCallback: (e) ->
+			{
+				trace(e.message);
+			},
+			frameworkParams: {
+				assetLibraryPaths: [
+					"songs" => "assets/songs",
+					"images" => "assets/images",
+					"shared" => "assets/shared",
+					"data" => "assets/data",
+					"characters" => "assets/characters",
+					"fonts" => "assets/fonts",
+					"sounds" => "assets/sounds",
+					"music" => "assets/music",
+					"tutorial" => "assets/tutorial",
+					"week1" => "assets/week1",
+					"week2" => "assets/week2",
+					"week3" => "assets/week3",
+					"week4" => "assets/week4",
+					"week5" => "assets/week5",
+					"week6" => "assets/week6",
+					"week7" => "assets/week7",
+				]
+			}
+		});
+		#end
 	}
 
 	function changeSelection(change:Int = 0):Void
@@ -118,5 +174,8 @@ class ModMenu extends ui.OptionsState.Page
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+
+	function saveMod() {
 	}
 }

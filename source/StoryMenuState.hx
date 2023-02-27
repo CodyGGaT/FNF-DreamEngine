@@ -1,5 +1,6 @@
 package;
 
+import openfl.Assets;
 #if discord_rpc
 import Discord.DiscordClient;
 #end
@@ -313,33 +314,37 @@ class StoryMenuState extends MusicBeatState
 
 			var diffic = "";
 
-			switch (curDifficulty)
-			{
-				case 0:
-					diffic = '-easy';
-				case 2:
-					diffic = '-hard';
-			}
+			if (curDifficulty != 1)
+				diffic = '-' + CoolUtil.difficultyString().toLowerCase();
 
 			PlayState.storyDifficulty = curDifficulty;
 
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
-			PlayState.storyWeek = curWeek;
-			PlayState.campaignScore = 0;
-			new FlxTimer().start(1, function(tmr:FlxTimer)
+			if (Assets.exists('assets/data/${PlayState.storyPlaylist[0].toLowerCase()}/${PlayState.storyPlaylist[0].toLowerCase()}-${CoolUtil.difficultyString().toLowerCase()}.json') || CoolUtil.difficultyString().toLowerCase() == 'normal' && Assets.exists('assets/data/${PlayState.storyPlaylist[0].toLowerCase()}/${PlayState.storyPlaylist[0].toLowerCase()}.json'))
 			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
-			});
+				var poop = Highscore.formatSong(PlayState.storyPlaylist[0].toLowerCase(), curDifficulty);
+				PlayState.storyDifficulty = curDifficulty;
+				PlayState.isStoryMode = true;
+				PlayState.storyWeek = '$curWeek';
+				PlayState.SONG = Song.loadFromJson(poop, PlayState.storyPlaylist[0].toLowerCase());
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					LoadingState.loadAndSwitchState(new PlayState(), true);
+				});
+			}
+			else
+			{
+				FlxG.game.stage.window.alert('hey looks like your week doesnt work maybe forgot the chart?', 'Dream Engine Crash Handler');
+			}
 		}
 	}
 
-	function changeDifficulty(change:Int = 0):Void
+	function changeDifficulty(change:Int = 0)
 	{
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = 2;
-		if (curDifficulty > 2)
+			curDifficulty = CoolUtil.difficultyString().length - 2;
+		if (curDifficulty > CoolUtil.difficultyString().length - 2)
 			curDifficulty = 0;
 
 		sprDifficulty.offset.x = 0;

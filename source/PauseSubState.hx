@@ -21,11 +21,12 @@ class PauseSubState extends MusicBeatSubstate
 		'Resume',
 		'Restart Song',
 		'Change Difficulty',
-		'Toggle Botplay'
+		'Options',
 		'Toggle Practice Mode',
 		'Exit to menu'
 	];
-	var difficultyChoices:Array<String> = ['EASY', 'NORMAL', 'HARD', 'BACK'];
+
+	public static var difficultyChoices:Array<String> = ['EASY', 'NORMAL', 'HARD', 'BACK'];
 
 	var menuItems:Array<String> = [];
 	var curSelected:Int = 0;
@@ -150,16 +151,15 @@ class PauseSubState extends MusicBeatSubstate
 					close();
 				case "EASY" | 'NORMAL' | "HARD":
 					PlayState.SONG = Song.loadFromJson(Highscore.formatSong(PlayState.SONG.song.toLowerCase(), curSelected),
-						PlayState.SONG.song.toLowerCase());
-
+					PlayState.SONG.song.toLowerCase());
 					PlayState.storyDifficulty = curSelected;
-
 					FlxG.resetState();
-
 				case 'Toggle Practice Mode':
 					PlayState.practiceMode = !PlayState.practiceMode;
 					practiceText.visible = PlayState.practiceMode;
-
+				case 'Options':
+					FlxG.switchState(new ui.OptionsState());
+					ui.OptionsState.wasPaused = true;
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
 					regenMenu();
