@@ -95,11 +95,6 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('debug', false);
 		preferenceCheck('songbar', true);
 
-		#if muted
-		setPref('master-volume', 0);
-		FlxG.sound.muted = true;
-		#end
-
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);
 

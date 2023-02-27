@@ -69,6 +69,8 @@ class ChartingState extends MusicBeatState
 	var _song:SwagSong;
 
 	var typingShit:FlxInputText;
+	var typingShit2:FlxInputText;
+
 	/*
 	 * WILL BE THE CURRENT / LAST PLACED NOTE
 	**/
@@ -120,6 +122,7 @@ class ChartingState extends MusicBeatState
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
+				strumTex: 'NOTE_assets',
 				stage: 'stage',
 				speed: 1,
 				validScore: false
@@ -249,15 +252,19 @@ class ChartingState extends MusicBeatState
 		});
 		gfVersionDropDown.selectedLabel = _song.gfVersion;
 
-		var stageDropDown = new FlxUIDropDownMenu(160, 120, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(stage:String)
+		var stageDropDown = new FlxUIDropDownMenu(140, 120, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(stage:String)
 		{
 			_song.stage = stages[Std.parseInt(stage)];
 		});
 		stageDropDown.selectedLabel = _song.stage;
 
+		var strumStuff = new FlxUIInputText(140, 320, 70, _song.strumTex, 8);
+		typingShit2 = strumStuff;
+
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
 		tab_group_song.add(UI_songTitle);
+		tab_group_song.add(strumStuff);
 
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
@@ -492,6 +499,7 @@ class ChartingState extends MusicBeatState
 
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
+		_song.strumTex = typingShit2.text;
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 
@@ -595,7 +603,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-		if (!typingShit.hasFocus)
+		if (!typingShit.hasFocus && !typingShit2.hasFocus)
 		{
 			if (FlxG.keys.justPressed.SPACE)
 			{
@@ -1010,29 +1018,6 @@ class ChartingState extends MusicBeatState
 		return FlxMath.remapToRange(strumTime, 0, 16 * Conductor.stepCrochet, gridBG.y, gridBG.y + gridBG.height);
 	}
 
-	/*
-		function calculateSectionLengths(?sec:SwagSection):Int
-		{
-			var daLength:Int = 0;
-
-			for (i in _song.notes)
-			{
-				var swagLength = i.lengthInSteps;
-
-				if (i.typeOfSection == Section.COPYCAT)
-					swagLength * 2;
-
-				daLength += swagLength;
-
-				if (sec != null && sec == i)
-				{
-					trace('swag loop??');
-					break;
-				}
-			}
-
-			return daLength;
-	}*/
 	private var daSpacing:Float = 0.3;
 
 	function loadLevel():Void

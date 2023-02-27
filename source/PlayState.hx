@@ -249,6 +249,9 @@ class PlayState extends MusicBeatState
 					else
 						SONG.stage = 'mall';
 				case '6':
+					if (SONG.strumTex == null)
+						SONG.strumTex = 'arrows-pixels';
+
 					if (SONG.song.toLowerCase().startsWith('thorns'))
 						SONG.stage = 'schoolEvil';
 					else
@@ -1575,13 +1578,12 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
 			var colorswap:ColorSwap = new ColorSwap();
-			babyArrow.shader = colorswap.shader;
 			colorswap.update(Note.arrowColors[i]);
 
-			switch (curStage)
+			switch (SONG.strumTex)
 			{
-				case 'school' | 'schoolEvil':
-					babyArrow.loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels'), true, 17, 17);
+				case 'arrows-pixels':
+					babyArrow.loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
 					babyArrow.animation.add('green', [6]);
 					babyArrow.animation.add('red', [7]);
 					babyArrow.animation.add('blue', [5]);
@@ -1616,7 +1618,10 @@ class PlayState extends MusicBeatState
 					}
 
 				default:
-					babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+					if (openfl.Assets.exists(Paths.image(SONG.strumTex)))
+						babyArrow.frames = Paths.getSparrowAtlas(SONG.strumTex);
+					else
+						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -1653,12 +1658,9 @@ class PlayState extends MusicBeatState
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
 
-			if (!isStoryMode)
-			{
-				babyArrow.y -= 10;
-				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
-			}
+			babyArrow.y -= 10;
+			babyArrow.alpha = 0;
+			FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 
 			babyArrow.ID = i;
 
@@ -2105,15 +2107,6 @@ class PlayState extends MusicBeatState
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
-
-				// WIP interpolation shit? Need to fix the pause issue
-				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * SONG.speed));
-
-				// removing this so whether the note misses or not is entirely up to Note class
-				// var noteMiss:Bool = daNote.y < -daNote.height;
-
-				// if (PreferencesMenu.getPref('downscroll'))
-				// noteMiss = daNote.y > FlxG.height;
 
 				if (daNote.isSustainNote && daNote.wasGoodHit)
 				{
@@ -2626,7 +2619,7 @@ class PlayState extends MusicBeatState
 			if (!holdArray[spr.ID])
 				spr.animation.play('static');
 
-			if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+			if (spr.animation.curAnim.name == 'confirm' && SONG.strumTex != 'arrows-pixels')
 			{
 				spr.centerOffsets();
 				spr.offset.x -= 13;
@@ -2640,7 +2633,7 @@ class PlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1):Void
 	{
 		#if sys
-		script.callFunction("noteMiss", [direction]);
+		script.callFunction("noteMiss");
 		#end
 
 		if (!PreferencesMenu.getPref('ghost-tapping'))
