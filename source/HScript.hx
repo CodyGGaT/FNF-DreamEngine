@@ -68,6 +68,7 @@ class HScript {
                 "Conductor" => Conductor,
                 "PlayState" => PlayState,
                 "MusicBeatState" => MusicBeatState,
+                "Character" => Character,
         
                 "Assets" => Assets
             ];

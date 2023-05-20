@@ -1,6 +1,5 @@
 package;
 
-import openfl.Assets;
 #if discord_rpc
 import Discord.DiscordClient;
 #end
@@ -49,7 +48,7 @@ class StoryMenuState extends MusicBeatState
 	];
 
 	var weekNames:Array<String> = [
-		"",
+		"How To Funk",
 		"Daddy Dearest",
 		"Spooky Month",
 		"PICO",
@@ -57,6 +56,17 @@ class StoryMenuState extends MusicBeatState
 		"RED SNOW",
 		"hating simulator ft. moawling",
 		"TANKMAN"
+	];
+
+	var weekColors:Array<FlxColor> = [
+		"0xFFa5004d",
+		"0xFFaf66ce",
+		"0xFFd57e00",
+		"0xFFb7d855",
+		"0xFFd8558e",
+		"0xFFc45eae",
+		"0xFFffaa6f",
+		"0xFFf6b604"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -97,7 +107,7 @@ class StoryMenuState extends MusicBeatState
 
 		var rankText:FlxText = new FlxText(0, 10);
 		rankText.text = 'RANK: GREAT';
-		rankText.setFormat(Paths.font("vcr.ttf"), 32);
+		rankText.setFormat(Paths.font("funkin.ttf"), 32);
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
@@ -314,37 +324,33 @@ class StoryMenuState extends MusicBeatState
 
 			var diffic = "";
 
-			if (curDifficulty != 1)
-				diffic = '-' + CoolUtil.difficultyString().toLowerCase();
+			switch (curDifficulty)
+			{
+				case 0:
+					diffic = '-easy';
+				case 2:
+					diffic = '-hard';
+			}
 
 			PlayState.storyDifficulty = curDifficulty;
 
-			if (Assets.exists('assets/data/${PlayState.storyPlaylist[0].toLowerCase()}/${PlayState.storyPlaylist[0].toLowerCase()}-${CoolUtil.difficultyString().toLowerCase()}.json') || CoolUtil.difficultyString().toLowerCase() == 'normal' && Assets.exists('assets/data/${PlayState.storyPlaylist[0].toLowerCase()}/${PlayState.storyPlaylist[0].toLowerCase()}.json'))
+			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+			PlayState.storyWeek = curWeek;
+			PlayState.campaignScore = 0;
+			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				var poop = Highscore.formatSong(PlayState.storyPlaylist[0].toLowerCase(), curDifficulty);
-				PlayState.storyDifficulty = curDifficulty;
-				PlayState.isStoryMode = true;
-				PlayState.storyWeek = '$curWeek';
-				PlayState.SONG = Song.loadFromJson(poop, PlayState.storyPlaylist[0].toLowerCase());
-				new FlxTimer().start(1, function(tmr:FlxTimer)
-				{
-					LoadingState.loadAndSwitchState(new PlayState(), true);
-				});
-			}
-			else
-			{
-				FlxG.game.stage.window.alert('hey looks like your week doesnt work maybe forgot the chart?', 'Dream Engine Crash Handler');
-			}
+				LoadingState.loadAndSwitchState(new PlayState(), true);
+			});
 		}
 	}
 
-	function changeDifficulty(change:Int = 0)
+	function changeDifficulty(change:Int = 0):Void
 	{
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = CoolUtil.difficultyString().length - 2;
-		if (curDifficulty > CoolUtil.difficultyString().length - 2)
+			curDifficulty = 2;
+		if (curDifficulty > 2)
 			curDifficulty = 0;
 
 		sprDifficulty.offset.x = 0;

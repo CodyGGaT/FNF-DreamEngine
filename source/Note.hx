@@ -113,6 +113,13 @@ class Note extends FlxSprite
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = true;
+
+				// colorSwap.colorToReplace = 0xFFF9393F;
+				// colorSwap.newColor = 0xFF00FF00;
+
+				// color = FlxG.random.color();
+				// color.saturation *= 4;
+				// replaceColor(0xFFC1C1C1, FlxColor.RED);
 		}
 
 		colorSwap = new ColorSwap();
@@ -230,12 +237,6 @@ class Note extends FlxSprite
 		{
 			if (alpha > 0.3)
 				alpha = 0.3;
-		}
-
-		if (ID < 0 || noteData < 0){
-			this.kill();
-			canBeHit = false;
-			willMiss = false;
 		}
 	}
 }

@@ -105,7 +105,7 @@ class FreeplayState extends MusicBeatState
 
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
 		// scoreText.autoSize = false;
-		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
+		scoreText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
 		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0x99000000);
@@ -201,7 +201,6 @@ class FreeplayState extends MusicBeatState
 				var poop = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.storyDifficulty = curDifficulty;
 				PlayState.isStoryMode = false;
-				PlayState.storyWeek = songs[curSelected].week;
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				LoadingState.loadAndSwitchState(new PlayState());
 		}else{
@@ -226,6 +225,18 @@ class FreeplayState extends MusicBeatState
 		diffText.text = "< " + CoolUtil.difficultyString() + " >";
 		positionHighscore();
 
+		// adjusting the highscore song name to be compatible (changeDiff)
+		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
+		switch (songHighscore)
+		{
+			case 'Dad-Battle':
+				songHighscore = 'Dadbattle';
+			case 'Philly-Nice':
+				songHighscore = 'Philly';
+			case 'M.I.L.F':
+				songHighscore = 'Milf';
+		}
+
 		trace(curDifficulty);
 	}
 
@@ -240,6 +251,20 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
+		// selector.y = (70 * curSelected) + 30;
+
+		// adjusting the highscore song name to be compatible (changeSelection)
+		// would read original scores if we didn't change packages
+		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
+		switch (songHighscore)
+		{
+			case 'Dad-Battle':
+				songHighscore = 'Dadbattle';
+			case 'Philly-Nice':
+				songHighscore = 'Philly';
+			case 'M.I.L.F':
+				songHighscore = 'Milf';
+		}
 
 		// selector.y = (70 * curSelected) + 30;
 

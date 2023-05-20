@@ -1,6 +1,5 @@
 package;
 
-import flixel.ui.FlxButton;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -8,10 +7,12 @@ import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import openfl.net.FileReference;
+import flixel.addons.ui.FlxUI;
 
 using StringTools;
 
@@ -45,22 +46,9 @@ class AnimationDebug extends FlxState
 		gridBG.scrollFactor.set(0, 0);
 		add(gridBG);
 
-		var saveButton:FlxButton = new FlxButton(10, 10, "Save Offsets", function()
-		{
-			var outputString:String = "";
-
-			for (swagAnim in animList)
-			{
-				outputString += swagAnim + " " + char.animOffsets.get(swagAnim)[0] + " " + char.animOffsets.get(swagAnim)[1] + "\n";
-			}
-
-			outputString.trim();
-			saveOffsets(outputString);
-
-			FlxG.game.stage.window.alert(daAnim + "'s offsets have been saved");
-		});
-
-		add(saveButton);
+		if (!FlxG.sound.music.playing) {
+			FlxG.sound.playMusic(Paths.music('breakfast'));
+		}
 
 		if (daAnim.startsWith('bf'))
 			isDad = false;
@@ -80,6 +68,7 @@ class AnimationDebug extends FlxState
 			add(dad);
 
 			char = dad;
+			dad.flipX = false;
 		}
 		else
 		{
@@ -89,12 +78,14 @@ class AnimationDebug extends FlxState
 			bfs.screenCenter();
 			bfs.debugMode = true;
 			add(bfs);
-
+			
 			bf = new Boyfriend(0, 0, daAnim);
 			bf.screenCenter();
 			bf.debugMode = true;
 			add(bf);
+
 			char = bf;
+			bf.flipX = false;
 		}
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
@@ -146,6 +137,9 @@ class AnimationDebug extends FlxState
 	override function update(elapsed:Float)
 	{
 		textAnim.text = char.animation.curAnim.name;
+
+		if (FlxG.keys.justPressed.ESCAPE)
+			FlxG.switchState(new PlayState());
 
 		if (FlxG.keys.justPressed.E)
 			FlxG.camera.zoom += 0.25;
@@ -224,10 +218,17 @@ class AnimationDebug extends FlxState
 			char.playAnim(animList[curAnim]);
 		}
 
-		if (FlxG.keys.justPressed.ESCAPE)
-		{
-			FlxG.switchState(new PlayState());
-		}
+	if (FlxG.keys.justPressed.F1) {
+			var outputString:String = "";
+
+			for (swagAnim in animList)
+			{
+				outputString += swagAnim + " " + char.animOffsets.get(swagAnim)[0] + " " + char.animOffsets.get(swagAnim)[1] + "\n";
+			}
+
+			outputString.trim();
+			saveOffsets(outputString);
+		};
 
 		super.update(elapsed);
 	}

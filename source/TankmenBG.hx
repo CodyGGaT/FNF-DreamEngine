@@ -1,5 +1,6 @@
 package;
 
+import ui.PreferencesMenu;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import haxe.display.Display.Package;
@@ -14,25 +15,26 @@ class TankmenBG extends FlxSprite
 
 	public var endingOffset:Float;
 
-	public function new(x:Float, y:Float, isGoingRight:Bool)
-	{
-		super(x, y);
-
-		// makeGraphic(200, 200);
-
-		frames = Paths.getSparrowAtlas('tankmanKilled1');
-		antialiasing = true;
-		animation.addByPrefix('run', 'tankman running', 24, true);
-		animation.addByPrefix('shot', 'John Shot ' + FlxG.random.int(1, 2), 24, false);
-
-		animation.play('run');
-		animation.curAnim.curFrame = FlxG.random.int(0, animation.curAnim.numFrames - 1);
-
-		updateHitbox();
-
-		setGraphicSize(Std.int(width * 0.8));
-		updateHitbox();
-	}
+	override public function new(x:Float, y:Float, uhh:Bool)
+		{
+			super(x, y);
+			if (!PreferencesMenu.getPref('censor-naughty'))
+			{
+				frames = Paths.getSparrowAtlas('tankmanKilled1NoBlood');
+			}
+			else
+			{
+				frames = Paths.getSparrowAtlas('tankmanKilled1');
+			}
+			antialiasing = true;
+			animation.addByPrefix('run', 'tankman running', 24, true);
+			animation.addByPrefix('shot', 'John Shot ' + FlxG.random.int(1, 2), 24, false);
+			animation.play('run');
+			animation.curAnim.curFrame = FlxG.random.int(0, animation.curAnim.frames.length - 1);
+			updateHitbox();
+			setGraphicSize(Std.int(width * 0.8));
+			updateHitbox();
+		}
 
 	public function resetShit(x:Float, y:Float, isGoingRight:Bool)
 	{

@@ -13,7 +13,7 @@ class CreditsState extends MusicBeatState
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['CGGaT', '[504]brandon'];
+	var menuItems:Array<String> = ['CGGaT', '504brandon', 'ninjamuffin99', 'PhantomArcade', 'evilsk8r', 'kawaisprite'];
 	var curSelected:Int = 0;
 
 	public function new()
@@ -80,8 +80,16 @@ class CreditsState extends MusicBeatState
 			{
 				case 'CGGaT':
 					FlxG.openURL('https://www.youtube.com/@CGGaT');
-				case '[504]brandon':
+				case '504brandon':
 					FlxG.openURL('https://github.com/504brandon');
+				case 'ninjamuffin99':
+					FlxG.openURL('https://twitter.com/ninja_muffin99');
+				case 'PhantomArcade':
+					FlxG.openURL('https://twitter.com/PhantomArcade3K');
+				case 'evilsk8r':
+					FlxG.openURL('https://twitter.com/evilsk8r');
+				case 'kawaisprite':
+					FlxG.openURL('https://twitter.com/kawaisprite');
 			}
 		}
 
