@@ -73,6 +73,7 @@ class TitleState extends MusicBeatState
 		var mods = CoolUtil.coolStringFile(sys.io.File.getContent('./mods/modList.txt'));
 
 		trace(mods);
+		flixel.FlxG.fixedTimestep = false;
 
 		polymod.Polymod.init({
 			modRoot: "mods",
@@ -265,10 +266,10 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(Paths.image('menuBGMagenta'));
 		bg.setGraphicSize(Std.int(bg.width * 1.1)); //replace the TitleBG with your image
 		bg.screenCenter();
-
+		bg.shader = swagShader.shader;
 		add(bg);
 
 		logoBl = new FlxSprite(-150, -100);
