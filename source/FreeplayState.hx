@@ -68,7 +68,7 @@ class FreeplayState extends MusicBeatState
 			{
 				var data:Array<String> = initSonglist[i].split(':');
 
-				addSong(data[0], data[1], data[2], FlxColor.fromString(data[3]), data[4]);
+				addSong(data[0], Std.parseInt(data[1]), data[2], FlxColor.fromString(data[3]), data[4]);
 			}
 		}
 
@@ -124,12 +124,12 @@ class FreeplayState extends MusicBeatState
 		super.create();
 	}
 
-	public function addSong(songName:String, weekNum:String, songCharacter:String, color:FlxColor, diffs:String)
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:FlxColor, diffs:String)
 	{
 		songs.push(new SongMetadata(songName, weekNum, songCharacter, color, diffs));
 	}
 
-	public function addWeek(songs:Array<String>, weekNum:String, ?songCharacters:Array<String>, ?color:FlxColor, ?diffs:String)
+	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>, ?color:FlxColor, ?diffs:String)
 	{
 		var num:Int = 0;
 		for (song in songs)
@@ -201,6 +201,7 @@ class FreeplayState extends MusicBeatState
 				var poop = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.storyDifficulty = curDifficulty;
 				PlayState.isStoryMode = false;
+				PlayState.storyWeek = songs[curSelected].week;
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				LoadingState.loadAndSwitchState(new PlayState());
 		}else{
@@ -323,12 +324,12 @@ class FreeplayState extends MusicBeatState
 class SongMetadata
 {
 	public var songName:String = "";
-	public var week:String = '0';
+	public var week:Int = 0;
 	public var songCharacter:String = "";
 	public var color:FlxColor;
 	public var diffs:String;
 
-	public function new(song:String, week:String, songCharacter:String, Color:FlxColor, diffss:String)
+	public function new(song:String, week:Int, songCharacter:String, Color:FlxColor, diffss:String)
 	{
 		this.songName = song;
 		this.week = week;

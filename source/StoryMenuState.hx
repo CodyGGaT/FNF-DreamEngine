@@ -20,6 +20,7 @@ using StringTools;
 
 class StoryMenuState extends MusicBeatState
 {
+	var yellowBG:FlxSprite;
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
@@ -37,7 +38,7 @@ class StoryMenuState extends MusicBeatState
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
-		['dad', 'bf', 'gf'],
+		[' ', 'bf', 'gf'],
 		['dad', 'bf', 'gf'],
 		['spooky', 'bf', 'gf'],
 		['pico', 'bf', 'gf'],
@@ -59,14 +60,14 @@ class StoryMenuState extends MusicBeatState
 	];
 
 	var weekColors:Array<FlxColor> = [
-		"0xFFa5004d",
-		"0xFFaf66ce",
-		"0xFFd57e00",
-		"0xFFb7d855",
-		"0xFFd8558e",
-		"0xFFc45eae",
-		"0xFFffaa6f",
-		"0xFFf6b604"
+		0xFFa5004d,
+		0xFFaf66ce,
+		0xFFd57e00,
+		0xFFb7d855,
+		0xFFd8558e,
+		0xFFc45eae,
+		0xFFffaa6f,
+		0xFFf6b604
 	];
 
 	var txtWeekTitle:FlxText;
@@ -112,7 +113,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
+		yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, FlxColor.WHITE);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -223,7 +224,7 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist = new FlxText(FlxG.width * 0.05, yellowBG.x + yellowBG.height + 100, 0, "Tracks", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
-		txtTracklist.color = 0xFFe55777;
+		txtTracklist.color = 0xFFff0000;
 		add(txtTracklist);
 		// add(rankText);
 		add(scoreText);
@@ -406,6 +407,7 @@ class StoryMenuState extends MusicBeatState
 		updateText();
 	}
 
+	var colorTween:FlxTween;
 	function updateText()
 	{
 		grpWeekCharacters.members[0].animation.play(weekCharacters[curWeek][0]);
@@ -413,26 +415,40 @@ class StoryMenuState extends MusicBeatState
 		grpWeekCharacters.members[2].animation.play(weekCharacters[curWeek][2]);
 		txtTracklist.text = "Tracks\n";
 
-		switch (grpWeekCharacters.members[0].animation.curAnim.name)
+		if(colorTween != null)
+			colorTween.cancel();
+		colorTween = FlxTween.color(yellowBG, 0.5, yellowBG.color, weekColors[curWeek]);
+
+		grpWeekCharacters.members[0].visible = grpWeekCharacters.members[0].animation.exists(weekCharacters[curWeek][0]);
+
+		trace(weekCharacters[curWeek][0]);
+		switch (weekCharacters[curWeek][0]) //thank Srt for helping me
 		{
 			case 'parents-christmas':
-				grpWeekCharacters.members[0].offset.set(200, 200);
-				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 0.99));
+				grpWeekCharacters.members[0].offset.set(280, 120);
+				grpWeekCharacters.members[0].scale.set(1, 1).scale(0.5);
 
 			case 'senpai':
-				grpWeekCharacters.members[0].offset.set(130, 0);
-				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1.4));
+				grpWeekCharacters.members[0].offset.set(130, -50);
+				grpWeekCharacters.members[0].scale.set(1, 1).scale(1);
 
 			case 'mom':
-				grpWeekCharacters.members[0].offset.set(100, 200);
-				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+				grpWeekCharacters.members[0].offset.set(160, 130);
+				grpWeekCharacters.members[0].scale.set(1, 1).scale(0.5);
 
 			case 'dad':
-				grpWeekCharacters.members[0].offset.set(120, 200);
-				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+				grpWeekCharacters.members[0].offset.set(120, 120);
+				grpWeekCharacters.members[0].scale.set(1, 1).scale(0.5);
 			case 'tankman':
 				grpWeekCharacters.members[0].offset.set(60, -20);
-				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+				grpWeekCharacters.members[0].scale.set(1, 1).scale(1);
+			case 'pico':
+				grpWeekCharacters.members[0].offset.set(140, 20);
+				grpWeekCharacters.members[0].scale.set(1.25, 1.25).scale(0.5);
+				grpWeekCharacters.members[0].scale.x *=-1;
+			case 'spooky':
+				grpWeekCharacters.members[0].offset.set(140, 30);
+				grpWeekCharacters.members[0].scale.set(1, 1).scale(0.5);
 
 			default:
 				grpWeekCharacters.members[0].offset.set(100, 100);

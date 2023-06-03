@@ -221,9 +221,9 @@ class PlayState extends MusicBeatState
 		initDiscord();
 		#end
 
-		switch (SONG.song.toLowerCase())
+		switch (SONG.stage)
 		{
-			case 'spookeez' | 'monster' | 'south':
+			case 'spooky':
 				curStage = "spooky";
 				halloweenLevel = true;
 
@@ -238,7 +238,7 @@ class PlayState extends MusicBeatState
 				add(halloweenBG);
 
 				isHalloween = true;
-			case 'pico' | 'blammed' | 'philly':
+			case "philly":
 				curStage = 'philly';
 
 				var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('philly/sky'));
@@ -281,7 +281,7 @@ class PlayState extends MusicBeatState
 
 				var street:FlxSprite = new FlxSprite(-40, streetBehind.y).loadGraphic(Paths.image('philly/street'));
 				add(street);
-			case "milf" | 'satin-panties' | 'high':
+			case "limo":
 				curStage = 'limo';
 				defaultCamZoom = 0.90;
 
@@ -321,7 +321,7 @@ class PlayState extends MusicBeatState
 
 				fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.image('limo/fastCarLol'));
 			// add(limo);
-			case "cocoa" | 'eggnog':
+			case "mall":
 				curStage = 'mall';
 
 				defaultCamZoom = 0.80;
@@ -375,7 +375,7 @@ class PlayState extends MusicBeatState
 				santa.animation.addByPrefix('idle', 'santa idle in fear', 24, false);
 				santa.antialiasing = true;
 				add(santa);
-			case 'winter-horrorland':
+			case "mallEvil":
 				curStage = 'mallEvil';
 				var bg:FlxSprite = new FlxSprite(-400, -500).loadGraphic(Paths.image('christmas/evilBG'));
 				bg.antialiasing = true;
@@ -393,7 +393,7 @@ class PlayState extends MusicBeatState
 				var evilSnow:FlxSprite = new FlxSprite(-200, 700).loadGraphic(Paths.image("christmas/evilSnow"));
 				evilSnow.antialiasing = true;
 				add(evilSnow);
-			case 'senpai' | 'roses':
+			case "school":
 				curStage = 'school';
 
 				// defaultCamZoom = 0.9;
@@ -458,7 +458,7 @@ class PlayState extends MusicBeatState
 				bgGirls.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
 				bgGirls.updateHitbox();
 				add(bgGirls);
-			case 'thorns':
+			case "schoolEvil":
 				curStage = 'schoolEvil';
 
 				var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
@@ -519,7 +519,7 @@ class PlayState extends MusicBeatState
 				add(waveSpriteFG);
 			 */
 
-			case 'guns' | 'stress' | 'ugh':
+			case "tank":
 				defaultCamZoom = 0.90;
 				curStage = 'tank';
 
@@ -826,7 +826,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
-		scoreTxt.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
@@ -1311,7 +1311,7 @@ class PlayState extends MusicBeatState
 			detailsPausedText = "Paused - " + detailsText;
 	
 			// Updating Discord Rich Presence.
-			DiscordClient.changePresence(detailsText, 'Playing ' + SONG.song.toLowerCase() + "on " + " (" + CoolUtil.difficultyString() + ") mode with" + songMisses + " misses", iconRPC);
+			DiscordClient.changePresence(detailsText, 'Playing ' + SONG.song.toLowerCase() + " on " + " (" + CoolUtil.difficultyString() + ") mode with" + songMisses + " misses", iconRPC);
 			#end
 		}
 
