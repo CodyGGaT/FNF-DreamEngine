@@ -23,7 +23,7 @@ class ModMenuSub extends MusicBeatSubstate
 	var curSelected:Int = 0;
 
 	public static var inMod:Bool = true;
-
+	
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -39,21 +39,20 @@ class ModMenuSub extends MusicBeatSubstate
 		#end
 
 		#if sys
-		if (FileSystem.exists('./mods'))
+		if (FileSystem.exists('./mods') && FileSystem.isDirectory('./mods'))
 		{
 			trace('mods loaded');
-			var modsInDaFolder = FileSystem.readDirectory('./mods');
-			if (modsInDaFolder == [''])
-				menuItems = ['no mods'];
-			else
-				menuItems = modsInDaFolder;
+			var modsInDaFolder = [];
+			for (file in FileSystem.readDirectory("./mods")) {
+				if (FileSystem.isDirectory(FileSystem.absolutePath("mods/" + file)))
+					modsInDaFolder.push(file);
+			}
+			menuItems = (modsInDaFolder.length > 0) ? modsInDaFolder : ['no mods'];
 		}
 		else
 		{
 			FileSystem.createDirectory('./mods');
-			FileSystem.createDirectory('./mods/introMod');
-			FlxG.game.stage.window.alert('hey we dont see a mods folder here so we made one for you', 'Dream Engine Crash Handler');
-			menuItems = ['no mods'];
+			menuItems = ['No mods'];
 		}
 		#end
 

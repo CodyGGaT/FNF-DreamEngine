@@ -44,8 +44,8 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('Botplay', 'botplay');
 		createPrefItem('Play As Opponent', 'opm');
 		createPrefItem('WaterMark', 'wm');
-		createPrefItem('Freeplay Cutsenses', 'freecut');
-		createPrefItem('Debug Mode', 'debug');
+		createPrefItem('Note Splashes', 'splash');
+		createPrefItem('Vanilla UI', 'oldui');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -91,9 +91,8 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('botplay', false);
 		preferenceCheck('opm', false);
 		preferenceCheck('wm', true);
-		preferenceCheck('freecut', false);
-		preferenceCheck('debug', false);
-		preferenceCheck('songbar', true);
+		preferenceCheck('splash', true);
+		preferenceCheck('oldui', false);
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);

@@ -95,13 +95,26 @@ class TitleState extends MusicBeatState
 					"week1" => "assets/week1",
 					"week2" => "assets/week2",
 					"week3" => "assets/week3",
-					"week4" => "assets/week3",
-					"week5" => "assets/week4",
-					"week6" => "assets/week5",
-					"week7" => "assets/week6",
+					"week4" => "assets/week4",
+					"week5" => "assets/week5",
+					"week6" => "assets/week6",
+					"week7" => "assets/week7",
 				]
 			}
 		});
+
+		HScript.parser = new hscript.Parser();
+		HScript.parser.allowJSON = true;
+		HScript.parser.allowMetadata = true;
+		HScript.parser.allowTypes = true;
+		HScript.parser.preprocesorValues = [
+			"buildVer" => Application.current.meta.get('version'),
+			"desktop" => #if (desktop) true #else false #end,
+			"windows" => #if (windows) true #else false #end,
+			"mac" => #if (mac) true #else false #end,
+			"linux" => #if (linux) true #else false #end,
+			"debugBuild" => #if (debug) true #else false #end
+		];
 		#end
 
 		startedIntro = false;

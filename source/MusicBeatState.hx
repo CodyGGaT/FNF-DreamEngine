@@ -16,6 +16,20 @@ class MusicBeatState extends FlxUIState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
+	var scriptName:String;
+	public function new(?script_name:String) {
+		super();
+		
+		//fuck i accidentialy made this look similar to codename
+		//Trust me, I didn't copy-paste. I didn't even look at codename while typing this.
+		if (script_name == null) {
+			var classPath = Type.getClassName(Type.getClass(this));
+			script_name = classPath.substr(classPath.lastIndexOf(".") + 1, classPath.length);
+		}
+		scriptName = script_name;
+	}
+
+
 
 	override function create()
 	{

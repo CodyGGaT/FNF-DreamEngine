@@ -493,47 +493,6 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
-				default:
-					{
-						if (Assets.exists('assets/shared/images/characters/$curCharacter/char.png'))
-							tex = Paths.getSparrowAtlas('characters/$curCharacter/char');
-						else
-							tex = Paths.getSparrowAtlas('characters/dad/char');
-						frames = tex;
-	
-						if (openfl.Assets.exists('assets/shared/images/characters/$curCharacter/$curCharacter' + 'Data.txt'))
-						{
-							var charData = CoolUtil.coolTextFile('assets/shared/images/characters/$curCharacter/$curCharacter' + 'Data.txt');
-	
-							for (i in 0...charData.length)
-							{
-								var charMetaData:Array<String> = charData[i].split(':');
-	
-								quickAnimAdd('idle', charMetaData[0]);
-								quickAnimAdd('singUP', charMetaData[1]);
-								quickAnimAdd('singRIGHT', charMetaData[2]);
-								quickAnimAdd('singDOWN', charMetaData[3]);
-								quickAnimAdd('singLEFT', charMetaData[4]);
-								hpColor = FlxColor.fromString(charMetaData[5]);
-							}
-	
-							if (!openfl.Assets.exists('assets/shared/images/characters/$curCharacter/$curCharacter' + 'Data.txt'))
-							{
-								quickAnimAdd('idle', 'Dad idle dance');
-								quickAnimAdd('singUP', 'Dad Sing Note UP');
-								quickAnimAdd('singRIGHT', 'Dad Sing Note RIGHT');
-								quickAnimAdd('singDOWN', 'Dad Sing Note DOWN');
-								quickAnimAdd('singLEFT', 'Dad Sing Note LEFT');
-								hpColor = 0xFFaf66ce;
-							}
-	
-							if (Assets.exists('assets/shared/images/characters/$curCharacter/$curCharacter' + 'Offsets.txt'))
-								loadOffsetFile('$curCharacter');
-							else
-								loadOffsetFile('dad');
-							playAnim('idle');
-						}
-					}
 			}
 		dance();
 		animation.finish();

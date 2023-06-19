@@ -825,20 +825,6 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
-		scoreTxt.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		scoreTxt.scrollFactor.set();
-		add(scoreTxt);
-
-		var versionTxt:FlxText = new FlxText(5, FlxG.height - 30, 0,
-			'$curSong - ${CoolUtil.difficultyString()} - Week: $storyWeek - Dream Engine: ${Application.current.meta.get('version')}', 12);
-		versionTxt.scrollFactor.set();
-		versionTxt.setFormat(Paths.font("funkin.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		versionTxt.borderSize = 2.5;
-		versionTxt.borderQuality = 200;
-		if (PreferencesMenu.getPref('wm'))
-			add(versionTxt);
-
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -846,6 +832,41 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		scoreTxt = new FlxText(healthBarBG.x - 105, (FlxG.height * 0.9) + 36, 800, "", 22);
+		scoreTxt.setFormat(Paths.font("funkin.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		if (storyWeek == 6){
+			scoreTxt.font = 'assets/fonts/pixel.otf';
+			scoreTxt.scale.set(0.8, 0.8);
+		}
+		add(scoreTxt);
+
+		if (PreferencesMenu.getPref('botplay'))
+			{
+				var botplayTxt = new FlxText(0, scoreTxt.y - 100, 0, "BOTPLAY", 32);
+				botplayTxt.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				if (storyWeek == 6){
+					botplayTxt.font = 'assets/fonts/pixel.otf';
+					botplayTxt.scale.set(0.8, 0.8);
+				}
+				botplayTxt.scrollFactor.set();
+				botplayTxt.screenCenter(X);
+				add(botplayTxt);
+				botplayTxt.cameras = [camHUD];
+			}
+
+		var versionTxt:FlxText = new FlxText(5, FlxG.height - 30, 0,
+			'$curSong - ${CoolUtil.difficultyString()} - Week: $storyWeek - Dream Engine: ${Application.current.meta.get('version')}', 12);
+		versionTxt.scrollFactor.set();
+		versionTxt.setFormat(Paths.font("funkin.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionTxt.borderQuality = 200;
+		if (storyWeek == 6){
+			versionTxt.font = 'assets/fonts/pixel.otf';
+			versionTxt.scale.set(0.8, 0.8);
+		}
+		if (PreferencesMenu.getPref('wm'))
+			add(versionTxt);
 
 		grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
@@ -2236,7 +2257,7 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
-		if (SONG.validScore)
+		if (SONG.validScore && !PreferencesMenu.getPref('botplay'))
 		{
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 		}
@@ -2355,7 +2376,7 @@ class PlayState extends MusicBeatState
 			isSick = false;
 		}
 
-		if (isSick)
+		if (isSick && PreferencesMenu.getPref('splash'))
 		{
 			var noteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 			noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
@@ -2576,17 +2597,17 @@ class PlayState extends MusicBeatState
 		];
 
 		// HOLDS, check for sustain notes
-		if (holdArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic)
+		if (holdArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic || PreferencesMenu.getPref('botplay'))
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData])
+				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData] || PreferencesMenu.getPref('botplay') && daNote.canBeHit && daNote.mustPress && daNote.isSustainNote)
 					goodNoteHit(daNote);
 			});
 		}
 
 		// PRESSES, check for note hits
-		if (pressArray.contains(true) && /*!boyfriend.stunned && */ generatedMusic)
+		if (pressArray.contains(true) && generatedMusic || PreferencesMenu.getPref('botplay'))
 		{
 			boyfriend.holdTimer = 0;
 
@@ -2596,7 +2617,7 @@ class PlayState extends MusicBeatState
 
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit)
+				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit || PreferencesMenu.getPref('botplay') && daNote.canBeHit && daNote.mustPress)
 				{
 					if (directionList.contains(daNote.noteData))
 					{
@@ -2645,7 +2666,7 @@ class PlayState extends MusicBeatState
 				}
 				for (coolNote in possibleNotes)
 				{
-					if (pressArray[coolNote.noteData])
+					if (pressArray[coolNote.noteData] || PreferencesMenu.getPref('botplay'))
 						goodNoteHit(coolNote);
 				}
 			}
