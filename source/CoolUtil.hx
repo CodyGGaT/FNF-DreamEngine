@@ -15,45 +15,21 @@ using StringTools;
 
 class CoolUtil
 {
-	public static function loadText(path:String):Array<String> {
-		var daList:Array<String> = Assets.getText(path).trim().split('\n');
-
-		for (i in 0...daList.length) {
-			daList[i] = daList[i].trim();
-		}
-
-		return daList;
-	}
-
-	public static function loadTextLowercase(path:String):Array<String> {
-		var daList:Array<String> = Assets.getText(path).trim().split('\n');
-
-		for (i in 0...daList.length) {
-			daList[i] = daList[i].trim().toLowerCase();
-		}
-
-		return daList;
-	}
-
-	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
+	public static var difficultyArray:Array<String> = ['EASY', 'NORMAL', 'HARD'];
 
 	public static function difficultyString():String
 	{
 		return difficultyArray[PlayState.storyDifficulty];
 	}
-
 	public static function coolTextFile(path:String):Array<String>
 	{
 		var daList:Array<String> = Assets.getText(path).trim().split('\n');
-
 		for (i in 0...daList.length)
 		{
 			daList[i] = daList[i].trim();
 		}
-
 		return daList;
 	}
-
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{
 		var dumbArray:Array<Int> = [];
@@ -63,7 +39,6 @@ class CoolUtil
 		}
 		return dumbArray;
 	}
-
 	/**
 		Lerps camera, but accountsfor framerate shit?
 		Right now it's simply for use to change the followLerp variable of a camera during update
@@ -75,7 +50,6 @@ class CoolUtil
 	{
 		return lerp * (FlxG.elapsed / (1 / 60));
 	}
-
 	/*
 	* just lerp that does camLerpShit for u so u dont have to do it every time
 	*/
@@ -83,7 +57,6 @@ class CoolUtil
 	{
 		return FlxMath.lerp(a, b, camLerpShit(ratio));
 	}
-
 	public static function coolStringFile(path:String):Array<String>
 		return [for (line in path.trim().split('\n')) line.trim()];
 }

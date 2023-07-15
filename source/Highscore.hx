@@ -28,7 +28,7 @@ class Highscore
 			setScore(formattedSong, score);
 	}
 
-	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
+	public static function saveWeekScore(week:Int = 0, score:Int = 0, ?diff:Int = 0):Void
 	{
 		#if newgrounds
 		NGio.postScore(score, "Week " + week);
@@ -68,10 +68,8 @@ class Highscore
 	{
 		var daSong:String = song;
 
-		if (diff == 0)
-			daSong += '-easy';
-		else if (diff == 2)
-			daSong += '-hard';
+		if (CoolUtil.difficultyString().toLowerCase() != 'normal')
+			daSong += '-${CoolUtil.difficultyString().toLowerCase()}';
 
 		return daSong;
 	}

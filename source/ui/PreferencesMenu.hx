@@ -34,6 +34,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('naughtyness', 'censor-naughty');
 		createPrefItem('downscroll', 'downscroll');
 		createPrefItem('middlescroll', 'middlescroll');
+		createPrefItem('Reset Button', 'reset');
 		createPrefItem('Now Playing Bar', 'songbar');
 		createPrefItem('flashing menu', 'flashing-menu');
 		createPrefItem('Camera Zooming on Beat', 'camera-zoom');
@@ -93,6 +94,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('wm', true);
 		preferenceCheck('splash', true);
 		preferenceCheck('oldui', false);
+		preferenceCheck('reset', true);
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);

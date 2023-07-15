@@ -43,7 +43,7 @@ class FreeplayState extends MusicBeatState
 	{
 		#if discord_rpc
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("In the Freeplay Menu", null);
 		#end
 
 		ModMenuSub.inMod = false;
@@ -329,12 +329,12 @@ class SongMetadata
 	public var color:FlxColor;
 	public var diffs:String;
 
-	public function new(song:String, week:Int, songCharacter:String, Color:FlxColor, diffss:String)
+	public function new(song:String, week:Int, songCharacter:String, Color:FlxColor, diffs:String)
 	{
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
 		this.color = Color;
-		this.diffs = diffss;
+		this.diffs = diffs;
 	}
 }

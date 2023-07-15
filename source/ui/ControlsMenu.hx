@@ -133,7 +133,7 @@ class ControlsMenu extends ui.OptionsState.Page
 
 		prompt = new Prompt("\nPress any key to rebind\n\n\n\n    Escape to cancel", None);
 		prompt.create();
-		prompt.createBgFromMargin(100, 0xFFfafd6d);
+		prompt.createBgFromMargin(100, 0xFFFF0000);
 		prompt.back.scrollFactor.set(0, 0);
 		prompt.exists = false;
 		add(prompt);

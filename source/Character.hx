@@ -9,8 +9,26 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxSort;
 import haxe.io.Path;
 import flixel.util.FlxColor;
+import haxe.Json;
+import openfl.Assets;
 
 using StringTools;
+
+typedef AnimLoader = {
+	var animName:String;
+	var anim:String;
+	var X:Float;
+	var Y:Float;
+	}
+	
+	typedef CharLoader = {
+	var img:String;
+	var anims:Array<AnimLoader>;
+	var hpColor:String;
+	var X:Float;
+	var Y:Float;
+	var GFChar:Bool;
+	}
 
 class Character extends FlxSprite
 {
