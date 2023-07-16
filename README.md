@@ -1,30 +1,17 @@
 # Friday Night Funkin' - Dream Engine
 
-This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
+This is the repository for Friday Night Funkin' Dream Engine, an Engine Designed to be a better Newgrounds FNF Engine
 
-Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
-Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
-Support the project on the itch.io page: https://ninja-muffin24.itch.io/funkin
+## Credits:
+* CGGaT - Programmer/Owner
+* 504Brandon - Assistant Programmer (Coded most of it)
 
-IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMPILED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
-
-## Credits / shoutouts
-
-- [ninjamuffin99 (me!)](https://twitter.com/ninja_muffin99) - Programmer
-- [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art
-- [Kawaisprite](https://twitter.com/kawaisprite) - Musician
+## Special Thanks
+Srt - coded the Scriptless Polymod and fixed an Options bug.
 
 This game was made with love to Newgrounds and its community. Extra love to Tom Fulp.
 
 ## Build instructions
-
-THESE INSTRUCTIONS ARE FOR COMPILING THE GAME'S SOURCE CODE!!!
-
-IF YOU WANT TO JUST DOWNLOAD AND INSTALL AND PLAY THE GAME NORMALLY, GO TO ITCH.IO TO DOWNLOAD THE GAME FOR PC, MAC, AND LINUX!!
-
-https://ninja-muffin24.itch.io/funkin
-
-IF YOU WANT TO COMPILE THE GAME YOURSELF, CONTINUE READING!!!
 
 ### Installing the Required Programs
 
@@ -38,6 +25,7 @@ flixel
 flixel-addons
 flixel-ui
 hscript
+hxcpp-debug-server
 ```
 So for each of those type `haxelib install [library]` so shit like `haxelib install flixel`
 
@@ -46,6 +34,8 @@ You'll also need to install a couple things that involve Gits. To do this, you n
 2. Follow instructions to install the application properly.
 3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` to install Polymod.
 4. Run `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` to install Discord RPC.
+5. Run `haxelib git scriptless-polymod https://github.com/SrtHero278/scriptless-polymod` to install Scriptless Polymod
+6. Run `haxelib git hscript-improved https://www.github.com/YoshiCrafter29/hscript-improved` to install HScript Improved
 
 You should have everything ready for compiling the game! Follow the guide below to continue!
 
