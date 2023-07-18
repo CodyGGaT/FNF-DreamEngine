@@ -39,7 +39,6 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('flashing menu', 'flashing-menu');
 		createPrefItem('Camera Zooming on Beat', 'camera-zoom');
 		createPrefItem('FPS Counter', 'fps-counter');
-		createPrefItem('Auto Pause', 'auto-pause');
 		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors');
 		createPrefItem('Ghost Tapping', 'ghost-tapping');
 		createPrefItem('Botplay', 'botplay');
@@ -47,6 +46,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('WaterMark', 'wm');
 		createPrefItem('Note Splashes', 'splash');
 		createPrefItem('Vanilla UI', 'oldui');
+		createPrefItem('Autoplay on Freeplay', 'apfp');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -85,7 +85,6 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('flashing-menu', true);
 		preferenceCheck('camera-zoom', true);
 		preferenceCheck('fps-counter', true);
-		preferenceCheck('auto-pause', true);
 		preferenceCheck('master-volume', 1);
 		preferenceCheck('heatlthbar-colors', true);
 		preferenceCheck('ghost-tapping', true);
@@ -95,11 +94,10 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('splash', true);
 		preferenceCheck('oldui', false);
 		preferenceCheck('reset', true);
+		preferenceCheck('apfp', true);
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);
-
-		FlxG.autoPause = getPref('auto-pause');
 	}
 
 	private function createPrefItem(prefName:String, prefString:String, prefValue:String = 'TBool'):Void
@@ -157,8 +155,6 @@ class PreferencesMenu extends ui.OptionsState.Page
 		{
 			case 'fps-counter':
 				Main.fpsCounter.visible = PreferencesMenu.getPref('fps-counter');
-			case 'auto-pause':
-				FlxG.autoPause = getPref('auto-pause');
 		}
 
 		FlxG.save.data.preferences = preferences;

@@ -2005,11 +2005,11 @@ class PlayState extends MusicBeatState
 				 CTRL+SHIFT+8 for gf   */
 			if (FlxG.keys.pressed.SHIFT)
 				if (FlxG.keys.pressed.CONTROL)
-					FlxG.switchState(new AnimationDebug(gf.curCharacter));
+					FlxG.switchState(new CharacterEditorState(gf.curCharacter));
 				else 
-					FlxG.switchState(new AnimationDebug(SONG.player1));
+					FlxG.switchState(new CharacterEditorState(SONG.player1));
 			else
-				FlxG.switchState(new AnimationDebug(SONG.player2));
+				FlxG.switchState(new CharacterEditorState(SONG.player2));
 		}
 		
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)

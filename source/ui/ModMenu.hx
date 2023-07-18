@@ -92,6 +92,11 @@ class ModMenu extends Page
 			#end
 		}
 
+		if (FlxG.keys.justPressed.SEVEN)
+		{
+			FlxG.switchState(new ui.ToolboxState());
+		}
+
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;

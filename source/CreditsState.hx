@@ -13,7 +13,7 @@ class CreditsState extends MusicBeatState
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['CGGaT', '504brandon', 'ninjamuffin99', 'PhantomArcade', 'evilsk8r', 'kawaisprite'];
+	var menuItems:Array<String> = ['CGGaT', '504brandon', 'mohammadstar59', 'ninjamuffin99', 'PhantomArcade', 'evilsk8r', 'kawaisprite'];
 	var curSelected:Int = 0;
 
 	public function new()
@@ -82,6 +82,8 @@ class CreditsState extends MusicBeatState
 					FlxG.openURL('https://www.youtube.com/@CGGaT');
 				case '504brandon':
 					FlxG.openURL('https://github.com/504brandon');
+				case 'mohammadstar59':
+					FlxG.openURL('https://twitter.com/Mohammadstar59');
 				case 'ninjamuffin99':
 					FlxG.openURL('https://twitter.com/ninja_muffin99');
 				case 'PhantomArcade':
@@ -91,12 +93,6 @@ class CreditsState extends MusicBeatState
 				case 'kawaisprite':
 					FlxG.openURL('https://twitter.com/kawaisprite');
 			}
-		}
-
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
 		}
 
 		if (controls.BACK)
