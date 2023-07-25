@@ -12,6 +12,7 @@ import flixel.util.FlxColor;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import openfl.net.FileReference;
+import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUI;
 
 using StringTools;
@@ -31,6 +32,7 @@ class CharacterEditorState extends FlxState
 	var isDad:Bool = true;
 	var daAnim:String = 'spooky';
 	var camFollow:FlxObject;
+	var UI_box:FlxUITabMenu;
 
 	public function new(daAnim:String = 'spooky')
 	{
@@ -42,9 +44,19 @@ class CharacterEditorState extends FlxState
 	{
 		FlxG.sound.music.stop();
 
-		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
-		gridBG.scrollFactor.set(0, 0);
-		add(gridBG);
+		FlxG.mouse.visible = true;
+		FlxG.mouse.enabled = true;
+
+		var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
+		add(bg);
+
+		var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
+		stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+		stageFront.updateHitbox();
+		stageFront.antialiasing = true;
+		stageFront.scrollFactor.set(0.9, 0.9);
+		stageFront.active = false;
+		add(stageFront);
 
 		if (!FlxG.sound.music.playing) {
 			FlxG.sound.playMusic(Paths.music('breakfast'));
@@ -95,6 +107,18 @@ class CharacterEditorState extends FlxState
 		textAnim.size = 26;
 		textAnim.scrollFactor.set();
 		add(textAnim);
+
+		var tabs = [
+			{name: "Character", label: 'Character'},
+			{name: "Animations", label: 'Animations'}
+		];
+
+		UI_box = new FlxUITabMenu(null, tabs, true);
+
+		UI_box.resize(300, 400);
+		UI_box.x = FlxG.width / 1.35;
+		UI_box.y = 20;
+		add(UI_box);
 
 		genBoyOffsets();
 

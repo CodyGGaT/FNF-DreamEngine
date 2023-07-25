@@ -70,7 +70,7 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		#if desktop
-		var mods = CoolUtil.coolStringFile(sys.io.File.getContent('./mods/modList.txt'));
+		var mods = CoolUtil.coolStringFile(sys.io.File.getContent('./assets/data/modList.txt'));
 
 		trace(mods);
 		flixel.FlxG.fixedTimestep = false;

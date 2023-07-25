@@ -21,7 +21,7 @@ typedef AnimLoader = {
 	var Y:Float;
 	}
 	
-	typedef CharLoader = {
+typedef CharLoader = {
 	var img:String;
 	var anims:Array<AnimLoader>;
 	var hpColor:String;
@@ -40,7 +40,7 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 	public var hpColor:FlxColor;
-
+	
 	public var animationNotes:Array<Dynamic> = [];
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
@@ -53,9 +53,6 @@ class Character extends FlxSprite
 
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
-		#if sys
-		var script:HScript;
-		#end
 
 		switch (curCharacter)
 		{
@@ -345,13 +342,13 @@ class Character extends FlxSprite
 				quickAnimAdd('singDOWNmiss', 'Pico Down Note MISS');
 
 				addOffset("singRIGHTmiss", -40, 49);
-				addOffset("singDOWN", 92, -77);
+				addOffset("singDOWN", 200, -70);
 				addOffset("singLEFTmiss", 82, 27);
-				addOffset("singUP", 20, 29);
+				addOffset("singUP", -29, 27);
 				addOffset("idle", 0, 0);
 				addOffset("singDOWNmiss", 86, -37);
-				addOffset("singRIGHT", -46, 1);
-				addOffset("singLEFT", 86, -11);
+				addOffset("singRIGHT", -68, -7);
+				addOffset("singLEFT", 65, 9);
 				addOffset("singUPmiss", 26, 67);
 
 				hpColor = 0xFFb7d855;

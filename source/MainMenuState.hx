@@ -28,9 +28,25 @@ class MainMenuState extends MusicBeatState {
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
+	var script:HScript;
+
 	override function create() {
+
+		script = new HScript('states/MainMenuState');
+
+		if (!script.isBlank && script.expr != null)
+		{
+			script.interp.scriptObject = this;
+			script.setValue('add', add);
+			script.interp.execute(script.expr);
+		}
+
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
+
+		#if sys
+		script.callFunction('create');
+		#end
 
 		if (!FlxG.sound.music.playing) {
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -61,7 +77,7 @@ class MainMenuState extends MusicBeatState {
 		magenta.color = 0xFFfd719b;
 		add(magenta);
 		// magenta.scrollFactor.set();
-
+		
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
@@ -89,6 +105,10 @@ class MainMenuState extends MusicBeatState {
 
 		// NG.core.calls.event.logEvent('swag').send();
 
+		#if sys
+		script.callFunction('createPost');
+		#end
+
 		changeItem();
 
 		super.create();
@@ -97,6 +117,11 @@ class MainMenuState extends MusicBeatState {
 	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float) {
+
+		#if sys
+		script.callFunction('update', [elapsed]);
+		#end
+
 		if (FlxG.sound.music.volume < 0.8) {
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
@@ -166,6 +191,10 @@ class MainMenuState extends MusicBeatState {
 		menuItems.forEach(function(spr:FlxSprite) {
 			spr.screenCenter(X);
 		});
+
+		#if sys
+		script.callFunction('updatePost', [elapsed]);
+		#end
 	}
 
 	function changeItem(huh:Int = 0) {

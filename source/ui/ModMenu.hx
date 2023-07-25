@@ -19,9 +19,24 @@ class ModMenu extends Page
 	var menuItems:Array<String> = [];
 	var curSelected:Int = 0;
 
+	var stateScript:HScript;
+	public static var state:String;
+
 	public function new()
 	{
 		super();
+
+		#if sys
+		stateScript = new HScript('states/$state');
+		if (!stateScript.isBlank && stateScript.expr != null)
+		{
+			stateScript.interp.scriptObject = this;
+			stateScript.setValue('add', add);
+			stateScript.interp.execute(stateScript.expr);
+		}
+
+		stateScript.callFunction('create');
+		#end
 
 		#if sys
 		menuItems = FileSystem.readDirectory('./mods');
@@ -81,6 +96,10 @@ class ModMenu extends Page
 	{
 		super.update(elapsed);
 
+		#if sys
+        stateScript.callFunction('update', [elapsed]);
+        #end
+
 		if (FlxG.keys.justPressed.R)
 		{
 			#if sys
@@ -115,11 +134,23 @@ class ModMenu extends Page
 			var daSelected:String = menuItems[curSelected];
 
 			#if sys
-			File.saveContent('./mods/modList.txt', daSelected);
+			File.saveContent('./assets/data/modList.txt', daSelected);
 			FlxG.switchState(new TitleState());
 			#end
 		}
 	}
+
+	public function stepHit() {
+        #if sys
+        stateScript.callFunction('stepHit');
+        #end
+    }
+
+    public function beatHit() {
+        #if sys
+        stateScript.callFunction('beatHit');
+        #end
+    }
 
 	function changeSelection(change:Int = 0):Void
 	{

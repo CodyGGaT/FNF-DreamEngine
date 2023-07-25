@@ -39,6 +39,8 @@ class FreeplayState extends MusicBeatState
 	var bg:FlxSprite;
 	var scoreBG:FlxSprite;
 
+	var script:HScript;
+
 	override function create()
 	{
 		#if discord_rpc
@@ -49,6 +51,15 @@ class FreeplayState extends MusicBeatState
 		ModMenuSub.inMod = false;
 
 		var isDebug:Bool = false;
+
+		script = new HScript('states/FreeplayState');
+
+		if (!script.isBlank && script.expr != null)
+		{
+			script.interp.scriptObject = this;
+			script.setValue('add', add);
+			script.interp.execute(script.expr);
+		}
 
 		#if debug
 		isDebug = true;
@@ -78,6 +89,10 @@ class FreeplayState extends MusicBeatState
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		add(bg);
+
+		#if sys
+		script.callFunction('create');
+		#end
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -118,6 +133,10 @@ class FreeplayState extends MusicBeatState
 
 		add(scoreText);
 
+		#if sys
+		script.callFunction('createPost');
+		#end
+
 		changeSelection();
 		changeDiff();
 
@@ -126,6 +145,9 @@ class FreeplayState extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:FlxColor, diffs:String)
 	{
+		#if sys
+		script.callFunction('addSong', [songName, weekNum, songCharacter, color, diffs]);
+		#end
 		songs.push(new SongMetadata(songName, weekNum, songCharacter, color, diffs));
 	}
 
@@ -207,6 +229,10 @@ class FreeplayState extends MusicBeatState
 		}else{
 			FlxG.game.stage.window.alert('hey looks like ${songs[curSelected].songName.toLowerCase()} doesnt have a json is it just this difficulty?', 'Dream Engine Crash Handler');
 		}
+
+		#if sys
+		script.callFunction('updatePost', [elapsed]);
+		#end
 	}
 }
 
@@ -243,6 +269,7 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
+
 		// NGio.logEvent('Fresh');
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		
@@ -252,6 +279,11 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
+
+		#if sys
+		script.callFunction('changeSelection');
+		#end
+		
 		// selector.y = (70 * curSelected) + 30;
 
 		// adjusting the highscore song name to be compatible (changeSelection)
@@ -303,6 +335,9 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+		#if sys
+		script.callFunction('changeSelectionPost');
+		#end
 	}
 
 	function positionHighscore()

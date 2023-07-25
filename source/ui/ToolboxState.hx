@@ -49,7 +49,7 @@ class ToolboxState extends MusicBeatState {
 				case 'Chart Editor':
 					FlxG.switchState(new ChartingState());
 				case 'Character Editor':
-					FlxG.switchState(new CharacterEditorState());
+					FlxG.switchState(new CharacterEditorState('dad'));
 			}
 		}
 
