@@ -14,22 +14,26 @@ import openfl.Assets;
 
 using StringTools;
 
-typedef AnimLoader = {
-	var animName:String;
+typedef AnimLoading =
+{
+	var prefix:String;
 	var anim:String;
-	var X:Float;
-	var Y:Float;
-	}
-	
-typedef CharLoader = {
-	var img:String;
-	var anims:Array<AnimLoader>;
-	var hpColor:String;
-	var X:Float;
-	var Y:Float;
-	var GFChar:Bool;
-	}
+	var x:Float;
+	var y:Float;
+	var looped:Bool;
+	var fps:Int;
+}
 
+typedef CharacterLoading =
+{
+	var image:String;
+	var flipX:Bool;
+	var x:Float;
+	var y:Float;
+	var iconName:String;
+	var hpColor:String;
+	var anims:Array<AnimLoading>;
+}
 class Character extends FlxSprite
 {
 	public var animOffsets:Map<String, Array<Dynamic>>;
@@ -41,10 +45,32 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	public var hpColor:FlxColor;
 	
+	var script:HScript;
+	public var iconName:String;
+	public var charJson:CharacterLoading;
+	public var facesLeft:Bool = false;
+	public var stepsUntilRelease:Float = 4;
+
 	public var animationNotes:Array<Dynamic> = [];
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
+		#if sys
+		script = new HScript('characters/$curCharacter');
+		if (!script.isBlank && script.expr != null)
+		{
+			script.interp.scriptObject = this;
+			script.setValue('character', character);
+			script.interp.execute(script.expr);
+		}else{
+			loadByJson('dad');
+		}
+
+		script.callFunction('create');
+		#else
+		loadByJson('dad');
+		#end
+
 		super(x, y);
 
 		animOffsets = new Map<String, Array<Dynamic>>();
@@ -761,6 +787,10 @@ class Character extends FlxSprite
 	}
 	override function update(elapsed:Float)
 	{
+		#if sys
+		script.callFunction('update', [elapsed]);
+		#end
+
 		if (!curCharacter.startsWith('bf'))
 		{
 			if (animation.curAnim.name.startsWith('sing'))
@@ -827,6 +857,10 @@ class Character extends FlxSprite
 	 */
 	public function dance()
 	{
+		#if sys
+		script.callFunction('dance');
+		#end
+
 		if (!debugMode)
 		{
 			switch (curCharacter)
@@ -894,5 +928,35 @@ class Character extends FlxSprite
 				danced = !danced;
 			}
 		}
+	}
+
+	public function loadByJson(char:String)
+		{
+			if (!Assets.exists(Paths.json(char, 'characters',)))
+				charJson = Json.parse(Assets.getText(Paths.json('dad', 'characters')));
+			else
+				charJson = Json.parse(Assets.getText(Paths.json(char, 'characters')));
+	
+			frames = Paths.getSparrowAtlas(charJson.image);
+	
+			for (anim in charJson.anims)
+			{
+				if (anim.fps < 0)
+					anim.fps = 24;
+				if (anim.looped != true && anim.looped != false)
+					anim.looped = false;
+	
+				animation.addByPrefix(anim.anim, anim.prefix, anim.fps, anim.looped);
+	
+				addOffset(anim.anim, anim.x, anim.y);
+			}
+	
+			stepsUntilRelease = 6.1;
+	
+			if (charJson.iconName != null)
+				iconName = charJson.iconName;
+			if (charJson.hpColor != null)
+				hpColor = FlxColor.fromString(charJson.hpColor);
+			facesLeft = charJson.flipX;
 	}
 }

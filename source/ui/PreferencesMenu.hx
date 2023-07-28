@@ -47,6 +47,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('Note Splashes', 'splash');
 		createPrefItem('Vanilla UI', 'oldui');
 		createPrefItem('Autoplay on Freeplay', 'apfp');
+		createPrefItem('Song Position Bar', 'timebar');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -95,6 +96,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('oldui', false);
 		preferenceCheck('reset', true);
 		preferenceCheck('apfp', true);
+		preferenceCheck('timebar', false);
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);

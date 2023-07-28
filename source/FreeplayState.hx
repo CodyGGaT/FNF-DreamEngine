@@ -170,6 +170,10 @@ class FreeplayState extends MusicBeatState
 		if (FlxG.keys.justPressed.TAB && !ModMenuSub.inMod)
 			openSubState(new ModMenuSub(0, 0));
 
+		#if sys
+		script.callFunction('update', [elapsed]);
+		#end
+
 		if (FlxG.sound.music != null)
 		{
 			if (FlxG.sound.music.volume < 0.7)

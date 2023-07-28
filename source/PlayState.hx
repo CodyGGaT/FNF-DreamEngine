@@ -103,6 +103,12 @@ class PlayState extends MusicBeatState
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
 
+	private var timeBarBG:FlxSprite;
+	private var timeBarTxt:FlxText;
+	private var timeBar:FlxBar;
+	var songPercent:Float = 0;
+	private var updateTime:Bool = true;
+
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
 
@@ -929,6 +935,26 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
+		timeBarBG = new FlxSprite(0, FlxG.height * 0.03
+			).loadGraphic(Paths.image('healthBar'));
+		timeBarBG.screenCenter(X);
+		timeBarBG.scrollFactor.set();
+
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+			'songPercent', 0, 1);
+		timeBar.scrollFactor.set();
+		timeBar.createFilledBar(0xFFC3C3C3, dad.hpColor);
+
+		timeBarTxt = new FlxText(5, FlxG.height * 0.03, FlxG.width, '', 18);
+        timeBarTxt.setFormat(Paths.font("funkin.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        timeBarTxt.screenCenter(X);
+		
+		if (PreferencesMenu.getPref('timebar')){
+		add(timeBarBG);
+		add(timeBar);
+		add(timeBarTxt);
+		}
+
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -1008,6 +1034,9 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 		versionTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		timeBarBG.cameras = [camHUD];
+		timeBar.cameras = [camHUD];
+		timeBarTxt.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -2045,6 +2074,25 @@ class PlayState extends MusicBeatState
 					// trace('MISSED FRAME');
 				}
 			}
+
+			if(updateTime) {
+				var curTime:Float = Conductor.songPosition;
+				if(curTime < 0) curTime = 0;
+				songPercent = (curTime / songLength);
+
+				var songCalc:Float = (songLength - curTime);
+
+				var secondsTotal:Int = Math.floor(songCalc / 1000);
+				if(secondsTotal < 0) secondsTotal = 0;
+			}
+
+			if (generatedMusic)
+				{
+					var timeBarTime = (Conductor.songPosition - ((FlxG.sound.music.length) / 1000)) / 1000;
+		
+					timeBarTxt.text = SONG.song + ' / ' + FlxStringUtil.formatTime(timeBarTime) + ' / ' + FlxStringUtil.formatTime(((FlxG.sound.music.length) / 1000));
+				}
+
 			// Conductor.lastSongPos = FlxG.sound.music.time;
 		}
 
@@ -2566,19 +2614,19 @@ class PlayState extends MusicBeatState
 
 		var isSick:Bool = true;
 
-		if (noteDiff > Conductor.safeZoneOffset * 0.9)
+		if (noteDiff > Conductor.safeZoneOffset * 0.9 && !PreferencesMenu.getPref('botplay'))
 		{
 			daRating = 'shit';
 			score = 50;
 			isSick = false; // shitty copypaste on this literally just because im lazy and tired lol!
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.75 && !PreferencesMenu.getPref('botplay'))
 		{
 			daRating = 'bad';
 			score = 100;
 			isSick = false;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.2 && !PreferencesMenu.getPref('botplay'))
 		{
 			daRating = 'good';
 			score = 200;
@@ -2882,7 +2930,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				for (shit in 0...pressArray.length)
-					if (pressArray[shit])
+					if (pressArray[shit] && !PreferencesMenu.getPref('ghost-tapping'))
 						noteMiss(shit);
 			}
 		}
@@ -2897,7 +2945,7 @@ class PlayState extends MusicBeatState
 
 		playerStrums.forEach(function(spr:FlxSprite)
 		{
-			if (pressArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
+			if (pressArray[spr.ID] && spr.animation.curAnim.name != 'confirm' && !PreferencesMenu.getPref('botplay'))
 				spr.animation.play('pressed');
 			if (!holdArray[spr.ID])
 				spr.animation.play('static');
@@ -2915,7 +2963,6 @@ class PlayState extends MusicBeatState
 
 	function noteMiss(direction:Int = 1):Void
 	{
-		if (!PreferencesMenu.getPref('ghost-tapping')){
 		// whole function used to be encased in if (!boyfriend.stunned)
 		health -= 0.04;
 		songMisses++;
@@ -2946,7 +2993,6 @@ class PlayState extends MusicBeatState
 			case 3:
 				boyfriend.playAnim('singRIGHTmiss', true);
 		}
-	}
 }
 
 	/* not used anymore lol
