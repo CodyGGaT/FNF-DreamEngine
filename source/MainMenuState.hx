@@ -58,10 +58,6 @@ class MainMenuState extends MusicBeatState {
 		bg.antialiasing = true;
 		add(bg);
 
-		#if sys
-		script.callFunction('create');
-		#end
-
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
@@ -76,6 +72,10 @@ class MainMenuState extends MusicBeatState {
 		magenta.color = 0xFFfd719b;
 		add(magenta);
 		// magenta.scrollFactor.set();
+
+		#if sys
+		script.callFunction('create');
+		#end
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
@@ -116,6 +116,11 @@ class MainMenuState extends MusicBeatState {
 	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float) {
+
+		#if sys
+		script.callFunction('update', [elapsed]);
+		#end
+
 		if (FlxG.sound.music.volume < 0.8) {
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
@@ -184,9 +189,18 @@ class MainMenuState extends MusicBeatState {
 		menuItems.forEach(function(spr:FlxSprite) {
 			spr.screenCenter(X);
 		});
+
+		#if sys
+		script.callFunction('updatePost', [elapsed]);
+		#end
 	}
 
 	function changeItem(huh:Int = 0) {
+
+		#if sys
+		script.callFunction('changeItem', [huh]);
+		#end
+
 		curSelected += huh;
 
 		if (curSelected >= menuItems.length)
@@ -204,5 +218,9 @@ class MainMenuState extends MusicBeatState {
 
 			spr.updateHitbox();
 		});
+
+		#if sys
+		script.callFunction('changeItemPost', [huh]);
+		#end
 	}
 }

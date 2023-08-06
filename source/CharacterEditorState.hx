@@ -251,7 +251,7 @@ class CharacterEditorState extends FlxState
 			}
 
 			outputString.trim();
-			saveOffsets(outputString);
+			saveChar(outputString);
 		};
 
 		super.update(elapsed);
@@ -259,7 +259,7 @@ class CharacterEditorState extends FlxState
 
 	var _file:FileReference;
 
-	private function saveOffsets(saveString:String)
+	private function saveChar(saveString:String)
 	{
 		if ((saveString != null) && (saveString.length > 0))
 		{

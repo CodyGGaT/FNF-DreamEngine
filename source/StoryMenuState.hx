@@ -86,6 +86,8 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
+	var script:HScript;
+
 	override function create()
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
@@ -95,6 +97,20 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (!FlxG.sound.music.playing)
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		}
+
+		#if discord_rpc
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Story Menu", null);
+		#end
+
+		script = new HScript('states/StoryMenuState');
+
+		if (!script.isBlank && script.expr != null)
+		{
+			script.interp.scriptObject = this;
+			script.setValue('add', add);
+			script.interp.execute(script.expr);
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -114,6 +130,10 @@ class StoryMenuState extends MusicBeatState
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, FlxColor.WHITE);
+
+		#if sys
+		script.callFunction('create');
+		#end
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -225,6 +245,11 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
 		txtTracklist.color = 0xFFff0000;
+
+		#if sys
+		script.callFunction('createPost');
+		#end
+
 		add(txtTracklist);
 		// add(rankText);
 		add(scoreText);
@@ -239,6 +264,10 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		#if sys
+		script.callFunction('update', [elapsed]);
+		#end
+
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.5);
 
@@ -299,6 +328,10 @@ class StoryMenuState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 
+		#if sys
+		script.callFunction('updatePost', [elapsed]);
+		#end
+
 		super.update(elapsed);
 	}
 
@@ -308,6 +341,10 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
+		#if sys
+		script.callFunction('selectWeek');
+		#end
+
 		if (weekUnlocked[curWeek])
 		{
 			if (stopspamming == false)
@@ -342,11 +379,18 @@ class StoryMenuState extends MusicBeatState
 			{
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 			});
+		#if sys
+		script.callFunction('selectWeekPost');
+		#end
+			
 		}
 	}
 
 	function changeDifficulty(change:Int = 0):Void
 	{
+		#if sys
+		script.callFunction('changeDifficulty', [change]);
+		#end
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
@@ -404,12 +448,20 @@ class StoryMenuState extends MusicBeatState
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
+		#if sys
+		script.callFunction('changeDifficultyPost', [change]);
+		#end
+
 		updateText();
 	}
 
 	var colorTween:FlxTween;
 	function updateText()
 	{
+		#if sys
+		script.callFunction('updateText');
+		#end
+
 		grpWeekCharacters.members[0].animation.play(weekCharacters[curWeek][0]);
 		grpWeekCharacters.members[1].animation.play(weekCharacters[curWeek][1]);
 		grpWeekCharacters.members[2].animation.play(weekCharacters[curWeek][2]);
@@ -469,5 +521,9 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.x -= FlxG.width * 0.35;
 
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
+
+		#if sys
+		script.callFunction('updateTextPost');
+		#end
 	}
 }

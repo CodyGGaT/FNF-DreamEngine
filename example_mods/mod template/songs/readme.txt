@@ -1,0 +1,1 @@
+song folders go here (inst, vocals) like any modern fnf engine

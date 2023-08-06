@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Dream Engine" file="Dream Engine" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="Beta 0.3.1" company="CGGaT" />
+	<app title="Friday Night Funkin': Dream Engine" file="Dream Engine" packageName="com.cggat.dreamengine" package="com.cggat.dreamengine" main="Main" version="Beta 0.4" company="CGGaT" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />

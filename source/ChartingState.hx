@@ -49,6 +49,7 @@ class ChartingState extends MusicBeatState
 	public static var lastSection:Int = 0;
 
 	var bpmTxt:FlxText;
+	var infoTxt:FlxText;
 
 	var strumLine:FlxSprite;
 	final strumColors:Array<FlxColor> = [0xFFC24B99, 0xFF00FFFF, 0xFF12FA05, 0xFFF9393F];
@@ -158,6 +159,11 @@ class ChartingState extends MusicBeatState
 		bpmTxt.scrollFactor.set();
 		add(bpmTxt);
 
+		infoTxt = new FlxText(1000, 630, 0, "Press SPACE to play track\nPress A and D to change sections\nPress ENTER to go back in-game\nPress Q and E to do sustain notes", 16);
+		infoTxt.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		infoTxt.scrollFactor.set();
+		add(infoTxt);
+
 		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(FlxG.width / 2), 4);
 		add(strumLine);
 
@@ -167,8 +173,8 @@ class ChartingState extends MusicBeatState
 		var tabs = [
 			{name: "Song", label: 'Song'},
 			{name: "Section", label: 'Section'},
-			{name: "Note", label: 'Note'},
-			{name: "Events", label: 'Events'}
+			{name: "Note", label: 'Note'}//,
+			//{name: "Events", label: 'Events'}
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);

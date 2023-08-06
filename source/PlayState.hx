@@ -2993,6 +2993,11 @@ class PlayState extends MusicBeatState
 			case 3:
 				boyfriend.playAnim('singRIGHTmiss', true);
 		}
+
+		#if sys
+		for (script in scripts)
+			script.callFunction('onMiss');
+		#end
 }
 
 	/* not used anymore lol
