@@ -681,7 +681,7 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			default:
-				var Char:CharLoader = Json.parse(Assets.getText(Paths.json(curCharacter, 'characters')));
+				var Char:CharLoader = Json.parse(Assets.getText(Paths.json('characters/' + curCharacter)));
 
 				tex = Paths.getSparrowAtlas('characters/${Char.img}');
 				frames = tex;
