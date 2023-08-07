@@ -1,0 +1,32 @@
+{
+    "img": "DADDY_DEAREST",
+    "hpColor": "#af66ce",
+    "anims": [
+        {
+            "animName": "idle", 
+            "anim": "Dad idle dance0"
+        },
+        {
+            "animName": "singUP", 
+            "anim": "Dad Sing Note UP0",
+            "X": -6,
+            "Y": 50
+        },
+        {
+            "animName": "singDOWN", 
+            "anim": "Dad Sing Note DOWN0",
+            "Y": -31
+        },
+        {
+            "animName": "singLEFT", 
+            "anim": "Dad Sing Note LEFT0",
+            "X": -10,
+            "Y": 10
+        },
+        {
+            "animName": "singRIGHT", 
+            "anim": "Dad Sing Note RIGHT0",
+            "Y": 27
+        }
+        ]
+    }

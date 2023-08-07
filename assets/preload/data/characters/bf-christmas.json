@@ -1,0 +1,66 @@
+{
+    "img": "bfChristmas",
+    "flipX": true,
+    "hpColor": "#31b0d1",
+    "anims": [
+    {
+        "animName": "idle", 
+        "anim": "BF idle dance",
+        "X": -5
+    },
+    {
+        "animName": "singUP", 
+        "anim": "BF NOTE UP0",
+        "X": -29,
+        "Y": 27
+    },
+    {
+        "animName": "singDOWN", 
+        "anim": "BF NOTE DOWN0",
+        "X": -10,
+        "Y": -50
+    },
+    {
+        "animName": "singLEFT", 
+        "anim": "BF NOTE LEFT0",
+        "X": 12,
+        "Y": -6
+    },
+    {
+        "animName": "singRIGHT", 
+        "anim": "BF NOTE RIGHT0",
+        "X": -38,
+        "Y": -7
+    },
+    {
+        "animName": "singUPmiss", 
+        "anim": "BF NOTE UP MISS",
+        "X": -29,
+        "Y": 27
+    },
+    {
+        "animName": "singDOWNmiss", 
+        "anim": "BF NOTE DOWN MISS",
+        "X": -11,
+        "Y": -19
+    },
+    {
+        "animName": "singLEFTmiss", 
+        "anim": "BF NOTE LEFT MISS",
+        "X": 12,
+        "Y": 24
+    },
+    {
+        "animName": "singRIGHTmiss", 
+        "anim": "BF NOTE RIGHT MISS",
+        "X": -30,
+        "Y": 21
+    },
+    {
+        "animName": "hey", 
+        "anim": "BF HEY",
+        "X": 7,
+        "Y": 4
+    }
+    ]
+}

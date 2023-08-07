@@ -1,0 +1,59 @@
+{
+    "img": "Pico_FNF_assetss",
+    "flipX": true,
+    "hpColor": "#b7d855",
+    "anims": [
+    {
+        "animName": "idle", 
+        "anim": "Pico Idle Dance"
+    },
+    {
+        "animName": "singUP", 
+        "anim": "pico Up note0",
+        "X": -29,
+        "Y": 27
+    },
+    {
+        "animName": "singDOWN", 
+        "anim": "Pico Down Note0",
+        "X": 200,
+        "Y": -70
+    },
+    {
+        "animName": "singLEFT", 
+        "anim": "Pico Note Right0",
+        "X": 65,
+        "Y": 9
+    },
+    {
+        "animName": "singRIGHT", 
+        "anim": "Pico NOTE LEFT0",
+        "X": -68,
+        "Y": -7
+    },
+    {
+        "animName": "singUPmiss", 
+        "anim": "pico Up note miss",
+        "X": -68,
+        "Y": -7
+    },
+    {
+        "animName": "singDOWNmiss", 
+        "anim": "Pico Down Note MISS",
+        "X": 86,
+        "Y": -37
+    },
+    {
+        "animName": "singLEFTmiss", 
+        "anim": "Pico Note Right Miss",
+        "X": 82,
+        "Y": 27
+    },
+    {
+        "animName": "singRIGHTmiss", 
+        "anim": "Pico NOTE LEFT miss",
+        "X": -40,
+        "Y": -49
+    }
+    ]
+}

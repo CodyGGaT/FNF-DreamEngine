@@ -1,0 +1,34 @@
+{
+    "img": "Mom_Assets",
+    "hpColor": "#d8558e",
+    "anims": [
+        {
+            "animName": "idle", 
+            "anim": "Mom Idle"
+        },
+        {
+            "animName": "singUP", 
+            "anim": "Mom Up Pose",
+            "X": -1,
+            "Y": 81
+        },
+        {
+            "animName": "singDOWN", 
+            "anim": "MOM DOWN POSE",
+            "X": 20,
+            "Y": -157
+        },
+        {
+            "animName": "singLEFT", 
+            "anim": "Mom Left Pose",
+            "X": 250,
+            "Y": -23
+        },
+        {
+            "animName": "singRIGHT", 
+            "anim": "Mom Pose Left",
+            "X": 21,
+            "Y": -54
+        }
+    ]
+}
