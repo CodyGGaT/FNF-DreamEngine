@@ -1,0 +1,25 @@
+{
+    "img": "bfHoldingGF-DEAD",
+    "flipX": true,
+    "hpColor": "#31b0d1",
+    "anims": [
+    {
+        "animName": "firstDeath", 
+        "anim": "BF Dies with GF",
+        "X": 37,
+        "Y": 14
+    },
+    {
+        "animName": "deathLoop", 
+        "anim": "BF Dead with GF Loop",
+        "X": 37,
+        "Y": -3
+    },
+    {
+        "animName": "deathConfirm", 
+        "anim": "RETRY confirm holding gf",
+        "X": 37,
+        "Y": 28
+    }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "img": "Monster_Assets",
+    "hpColor": "#f3ff6e",
+    "anims": [
+        {
+            "animName": "idle", 
+            "anim": "monster idle"
+        },
+        {
+            "animName": "singUP", 
+            "anim": "monster up note",
+            "X": -23,
+            "Y": 87
+        },
+        {
+            "animName": "singDOWN", 
+            "anim": "monster down",
+            "X": -63,
+            "Y": -86
+        },
+        {
+            "animName": "singLEFT", 
+            "anim": "Monster left note",
+            "X": -31,
+            "Y": 4
+        },
+        {
+            "animName": "singRIGHT", 
+            "anim": "Monster Right note",
+            "X": -51,
+            "Y": 15
+        }
+        ]
+    }

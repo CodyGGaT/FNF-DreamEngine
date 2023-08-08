@@ -241,24 +241,6 @@ class Character extends FlxSprite
 				hpColor = 0xFFd8558e;
 				playAnim('idle');
 
-			case 'monster':
-				tex = Paths.getSparrowAtlas('characters/Monster_Assets');
-				frames = tex;
-				quickAnimAdd('idle', 'monster idle');
-				quickAnimAdd('singUP', 'monster up note');
-				quickAnimAdd('singDOWN', 'monster down');
-				quickAnimAdd('singLEFT', 'Monster left note');
-				quickAnimAdd('singRIGHT', 'Monster Right note');
-
-				addOffset('idle');
-				addOffset("singUP", -23, 87);
-				addOffset("singRIGHT", -51, 15);
-				addOffset("singLEFT", -31, 4);
-				addOffset("singDOWN", -63, -86);
-
-				hpColor = 0xFFf3ff6e;
-				playAnim('idle');
-
 			case 'monster-christmas':
 				tex = Paths.getSparrowAtlas('characters/monsterChristmas');
 				frames = tex;
@@ -375,23 +357,6 @@ class Character extends FlxSprite
 				antialiasing = false;
 				flipX = true;
 
-			case 'bf-holding-gf-dead':
-				frames = Paths.getSparrowAtlas('characters/bfHoldingGF-DEAD');
-				quickAnimAdd('singUP', 'BF Dead with GF Loop');
-				quickAnimAdd('firstDeath', 'BF Dies with GF');
-				animation.addByPrefix('deathLoop', 'BF Dead with GF Loop', 24, true);
-				quickAnimAdd('deathConfirm', 'RETRY confirm holding gf');
-
-				addOffset('firstDeath', 37, 14);
-				addOffset('deathLoop', 37, -3);
-				addOffset('deathConfirm', 37, 28);
-				playAnim('firstDeath');
-
-				hpColor = 0xFF31b0d1;
-				playAnim('firstDeath');
-
-				flipX = true;
-
 			case 'senpai':
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				quickAnimAdd('idle', 'Senpai Idle');
@@ -461,32 +426,6 @@ class Character extends FlxSprite
 				hpColor = 0xFFff3c6e;
 				antialiasing = false;
 
-			case 'parents-christmas':
-				frames = Paths.getSparrowAtlas('characters/mom_dad_christmas_assets');
-				quickAnimAdd('idle', 'Parent Christmas Idle');
-				quickAnimAdd('singUP', 'Parent Up Note Dad');
-				quickAnimAdd('singDOWN', 'Parent Down Note Dad');
-				quickAnimAdd('singLEFT', 'Parent Left Note Dad');
-				quickAnimAdd('singRIGHT', 'Parent Right Note Dad');
-
-				quickAnimAdd('singUP-alt', 'Parent Up Note Mom');
-
-				quickAnimAdd('singDOWN-alt', 'Parent Down Note Mom');
-				quickAnimAdd('singLEFT-alt', 'Parent Left Note Mom');
-				quickAnimAdd('singRIGHT-alt', 'Parent Right Note Mom');
-
-				addOffset('idle');
-				addOffset("singUP", -47, 24);
-				addOffset("singRIGHT", -1, -23);
-				addOffset("singLEFT", -30, 16);
-				addOffset("singDOWN", -31, -29);
-				addOffset("singUP-alt", -47, 24);
-				addOffset("singRIGHT-alt", -1, -24);
-				addOffset("singLEFT-alt", -30, 15);
-				addOffset("singDOWN-alt", -30, -27);
-
-				hpColor = 0xFFc45eae;
-				playAnim('idle');
 			case 'tankman':
 				frames = Paths.getSparrowAtlas('characters/tankmanCaptain');
 

@@ -1,0 +1,58 @@
+{
+    "img": "mom_dad_christmas_assets",
+    "hpColor": "#c45eae",
+    "anims": [
+        {
+            "animName": "idle", 
+            "anim": "Parent Christmas Idle"
+        },
+        {
+            "animName": "singUP", 
+            "anim": "Parent Up Note Dad",
+            "X": -47,
+            "Y": 24
+        },
+        {
+            "animName": "singDOWN", 
+            "anim": "Parent Down Note Dad",
+            "X": -31,
+            "Y": -29
+        },
+        {
+            "animName": "singLEFT", 
+            "anim": "Parent Left Note Dad",
+            "X": -30,
+            "Y": 16
+        },
+        {
+            "animName": "singRIGHT", 
+            "anim": "Parent Right Note Dad",
+            "X": -1,
+            "Y": -23
+        },
+        {
+            "animName": "singUP-alt",
+            "anim": "Parent Up Note Mom",
+            "X": -47,
+            "Y": 24
+        },
+        {
+            "animName": "singDOWN-alt",
+            "anim": "Parent Down Note Mom",
+            "X": -30,
+            "Y": -27
+        },
+        {
+            "animName": "singLEFT-alt",
+            "anim": "Parent Left Note Mom",
+            "X": -30,
+            "Y": 15
+        },
+        {
+            "animName": "singRIGHT-alt",
+            "anim": "Parent Right Note Mom",
+            "X": -1,
+            "Y": -24
+        }
+        ]
+    }
