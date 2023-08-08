@@ -1,0 +1,47 @@
+{
+    "img": "tankmanCaptain",
+    "flipX": true,
+    "hpColor": "#FBAA25",
+    "anims": [
+    {
+        "animName": "idle", 
+        "anim": "Tankman Idle Dance"
+    },
+    {
+        "animName": "singUP", 
+        "anim": "Tankman UP note ",
+        "X": 27,
+        "Y": 58
+    },
+    {
+        "animName": "singDOWN", 
+        "anim": "Tankman DOWN note ",
+        "X": 68,
+        "Y": -106
+    },
+    {
+        "animName": "singLEFT", 
+        "anim": "Tankman Note Left ",
+        "X": 91,
+        "Y": -25
+    },
+    {
+        "animName": "singRIGHT", 
+        "anim": "Tankman Right Note ",
+        "X": -23,
+        "Y": -11
+    },
+    {
+        "animName": "singUP-alt", 
+        "anim": "TANKMAN UGH",
+        "X": -14,
+        "Y": -8
+    },
+    {
+        "animName": "singDOWN-alt", 
+        "anim": "PRETTY GOOD",
+        "X": 101,
+        "Y": 15
+    }
+    ]
+}

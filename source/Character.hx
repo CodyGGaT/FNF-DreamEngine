@@ -19,6 +19,7 @@ typedef AnimLoader = {
 	var anim:String;
 	var X:Float;
 	var Y:Float;
+	var indices:Array<Int>;
 	}
 	
 typedef CharLoader = {
@@ -425,51 +426,6 @@ class Character extends FlxSprite
 				playAnim('idle');
 				hpColor = 0xFFff3c6e;
 				antialiasing = false;
-
-			case 'tankman':
-				frames = Paths.getSparrowAtlas('characters/tankmanCaptain');
-
-				quickAnimAdd('idle', "Tankman Idle Dance");
-
-				if (isPlayer)
-				{
-					quickAnimAdd('singLEFT', 'Tankman Note Left ');
-					quickAnimAdd('singRIGHT', 'Tankman Right Note ');
-					quickAnimAdd('singLEFTmiss', 'Tankman Note Left MISS');
-					quickAnimAdd('singRIGHTmiss', 'Tankman Right Note MISS');
-				}
-				else
-				{
-					// Need to be flipped! REDO THIS LATER
-					quickAnimAdd('singLEFT', 'Tankman Right Note ');
-					quickAnimAdd('singRIGHT', 'Tankman Note Left ');
-					quickAnimAdd('singLEFTmiss', 'Tankman Right Note MISS');
-					quickAnimAdd('singRIGHTmiss', 'Tankman Note Left MISS');
-				}
-
-				quickAnimAdd('singUP', 'Tankman UP note ');
-				quickAnimAdd('singDOWN', 'Tankman DOWN note ');
-				quickAnimAdd('singUPmiss', 'Tankman UP note MISS');
-				quickAnimAdd('singDOWNmiss', 'Tankman DOWN note MISS');
-
-				// PRETTY GOOD tankman
-				// TANKMAN UGH instanc
-
-				quickAnimAdd('singDOWN-alt', 'PRETTY GOOD');
-				quickAnimAdd('singUP-alt', 'TANKMAN UGH');
-
-				addOffset("idle", 0, 0);
-				addOffset("singLEFT", 91, -25);
-				addOffset("singDOWN", 68, -106);
-				addOffset("singUP-alt", -14, -8);
-				addOffset("singRIGHT", -23, -11);
-				addOffset("singUP", 27, 58);
-				addOffset("singDOWN-alt", 101, 15);
-
-				hpColor = 0xFFFBAA25;
-				playAnim('idle');
-
-				flipX = true;
 			
 			default:
 				var Char:CharLoader = Json.parse(Assets.getText(Paths.json('characters/' + curCharacter)));
