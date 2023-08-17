@@ -1,5 +1,6 @@
 package;
 
+import ui.PreferencesMenu;
 import flixel.FlxSubState;
 #if discord_rpc
 import Discord.DiscordClient;
@@ -193,6 +194,9 @@ class FreeplayState extends MusicBeatState
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
 
+		if (!PreferencesMenu.getPref('apfp') && FlxG.keys.justPressed.SPACE)
+			accepted = false;
+
 		if (upP && !ModMenuSub.inMod){
 			changeSelection(-1);
 			if (songs[curSelected].songName == '')
@@ -205,8 +209,8 @@ class FreeplayState extends MusicBeatState
 				changeSelection(1);
 		}
 
-		if (FlxG.mouse.wheel != 0 && !ModMenuSub.inMod)
-			changeSelection(Math.round(FlxG.mouse.wheel / 7));
+		if (FlxG.mouse.wheel > 0 || FlxG.mouse.wheel < 0)
+            changeSelection(-FlxG.mouse.wheel);
 
 		if (controls.UI_LEFT_P && !ModMenuSub.inMod)
 			changeDiff(-1);

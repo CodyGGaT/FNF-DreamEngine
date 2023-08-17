@@ -42,6 +42,11 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 	public var hpColor:FlxColor;
+
+	public var Char:CharLoader;
+
+	public var charX:Float;
+	public var charY:Float;
 	
 	public var animationNotes:Array<Dynamic> = [];
 
@@ -137,36 +142,6 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
-			case 'bf-holding-gf':
-				frames = Paths.getSparrowAtlas('characters/bfAndGF');
-				quickAnimAdd('idle', 'BF idle dance');
-				quickAnimAdd('singDOWN', 'BF NOTE DOWN0');
-				quickAnimAdd('singLEFT', 'BF NOTE LEFT0');
-				quickAnimAdd('singRIGHT', 'BF NOTE RIGHT0');
-				quickAnimAdd('singUP', 'BF NOTE UP0');
-
-				quickAnimAdd('singDOWNmiss', 'BF NOTE DOWN MISS');
-				quickAnimAdd('singLEFTmiss', 'BF NOTE LEFT MISS');
-				quickAnimAdd('singRIGHTmiss', 'BF NOTE RIGHT MISS');
-				quickAnimAdd('singUPmiss', 'BF NOTE UP MISS');
-				quickAnimAdd('bfCatch', 'BF catches GF');
-
-				addOffset("idle", 0, 0);
-				addOffset("singUP", -29, 10);
-				addOffset("singRIGHT", -41, 23);
-				addOffset("singLEFT", 12, 7);
-				addOffset("singDOWN", -10, -10);
-				addOffset("singUPmiss", -29, 10);
-				addOffset("singRIGHTmiss", -41, 23);
-				addOffset("singLEFTmiss", 12, 7);
-				addOffset("singDOWNmiss", -10, -10);
-				addOffset("bfCatch", 0, 0);
-
-				hpColor = 0xFF31b0d1;
-				playAnim('idle');
-
-				flipX = true;
-
 			case 'gf-car':
 				tex = Paths.getSparrowAtlas('characters/gfCar');
 				frames = tex;
@@ -240,24 +215,6 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 20, -157);
 
 				hpColor = 0xFFd8558e;
-				playAnim('idle');
-
-			case 'monster-christmas':
-				tex = Paths.getSparrowAtlas('characters/monsterChristmas');
-				frames = tex;
-				quickAnimAdd('idle', 'monster idle');
-				quickAnimAdd('singUP', 'monster up note');
-				quickAnimAdd('singDOWN', 'monster down');
-				quickAnimAdd('singLEFT', 'Monster left note');
-				quickAnimAdd('singRIGHT', 'Monster Right note');
-
-				addOffset('idle');
-				addOffset("singUP", -21, 53);
-				addOffset("singRIGHT", -51, 10);
-				addOffset("singLEFT", -30, 7);
-				addOffset("singDOWN", -52, -91);
-
-				hpColor = 0xFFf3ff6e;
 				playAnim('idle');
 
 			case 'pico-speaker':
@@ -428,12 +385,15 @@ class Character extends FlxSprite
 				antialiasing = false;
 			
 			default:
-				var Char:CharLoader = Json.parse(Assets.getText(Paths.json('characters/' + curCharacter)));
+				Char = Json.parse(Assets.getText(Paths.json('characters/' + curCharacter)));
 
 				tex = Paths.getSparrowAtlas('characters/${Char.img}');
 				frames = tex;
 
 				flipX = Char.flipX;
+
+				x += Char.X;
+				y += Char.Y;
 
 				for (anim in Char.anims){
 				quickAnimAdd(anim.animName, anim.anim);

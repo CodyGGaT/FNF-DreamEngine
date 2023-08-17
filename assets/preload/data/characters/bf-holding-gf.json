@@ -1,0 +1,63 @@
+{
+    "img": "bfAndGF",
+    "flipX": true,
+    "hpColor": "#31b0d1",
+    "anims": [
+    {
+        "animName": "idle", 
+        "anim": "BF idle dance",
+    },
+    {
+        "animName": "singUP", 
+        "anim": "BF NOTE UP0",
+        "X": -29,
+        "Y": 10
+    },
+    {
+        "animName": "singDOWN", 
+        "anim": "BF NOTE DOWN0",
+        "X": -10,
+        "Y": -10
+    },
+    {
+        "animName": "singLEFT", 
+        "anim": "BF NOTE LEFT0",
+        "X": 12,
+        "Y": 7
+    },
+    {
+        "animName": "singRIGHT", 
+        "anim": "BF NOTE RIGHT0",
+        "X": -41,
+        "Y": -25
+    },
+    {
+        "animName": "singUPmiss", 
+        "anim": "BF NOTE UP MISS",
+        "X": -29,
+        "Y": 10
+    },
+    {
+        "animName": "singDOWNmiss", 
+        "anim": "BF NOTE DOWN MISS",
+        "X": -10,
+        "Y": -10
+    },
+    {
+        "animName": "singLEFTmiss", 
+        "anim": "BF NOTE LEFT MISS",
+        "X": 12,
+        "Y": 7
+    },
+    {
+        "animName": "singRIGHTmiss", 
+        "anim": "BF NOTE RIGHT MISS",
+        "X": -41,
+        "Y": 23
+    },
+    {
+        "animName": "bfCatch", 
+        "anim": "BF catches GF"
+    }
+    ]
+}

@@ -1,8 +1,8 @@
 {
-    "img": "Monster_Assets",
-    "X": 0,
-    "Y": 100,
+    "img": "monsterChristmas",
     "hpColor": "#f3ff6e",
+    "X": 0,
+    "Y": 130,
     "anims": [
         {
             "animName": "idle", 
@@ -11,26 +11,26 @@
         {
             "animName": "singUP", 
             "anim": "monster up note",
-            "X": -23,
-            "Y": 87
+            "X": -21,
+            "Y": 53
         },
         {
             "animName": "singDOWN", 
             "anim": "monster down",
-            "X": -63,
-            "Y": -86
+            "X": -52,
+            "Y": -91
         },
         {
             "animName": "singLEFT", 
             "anim": "Monster left note",
-            "X": -31,
-            "Y": 4
+            "X": -30,
+            "Y": 7
         },
         {
             "animName": "singRIGHT", 
             "anim": "Monster Right note",
             "X": -51,
-            "Y": 15
+            "Y": 10
         }
         ]
     }

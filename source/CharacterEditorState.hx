@@ -8,6 +8,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.FlxCamera;
 import flixel.util.FlxColor;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
@@ -104,6 +105,7 @@ class CharacterEditorState extends FlxState
 		add(dumbTexts);
 
 		textAnim = new FlxText(300, 16);
+		textAnim.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		textAnim.size = 26;
 		textAnim.scrollFactor.set();
 		add(textAnim);
@@ -115,11 +117,12 @@ class CharacterEditorState extends FlxState
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
 
-		UI_box.resize(300, 400);
+		UI_box.resize(300, 300);
 		UI_box.x = FlxG.width / 1.35;
 		UI_box.y = 20;
 		add(UI_box);
 
+		charTabShit();
 		genBoyOffsets();
 
 		camFollow = new FlxObject(0, 0, 2, 2);
@@ -138,8 +141,8 @@ class CharacterEditorState extends FlxState
 		for (anim => offsets in char.animOffsets)
 		{
 			var text:FlxText = new FlxText(10, 20 + (18 * daLoop), 0, anim + ": " + offsets, 15);
+			text.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.BLUE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			text.scrollFactor.set();
-			text.color = FlxColor.BLUE;
 			dumbTexts.add(text);
 
 			if (pushList)
@@ -251,15 +254,45 @@ class CharacterEditorState extends FlxState
 			}
 
 			outputString.trim();
-			saveChar(outputString);
+			saveOffsets(outputString);
 		};
 
 		super.update(elapsed);
 	}
 
+	function saveChar()
+	{
+		var char = {
+			"img": char.Char.img,
+			"hpColor": char.Char.hpColor,
+			"anims": char.Char.anims
+		};
+
+		for (animOffset in animList)
+			{
+				for (anim in char.anims)
+				{
+					if (anim.anim == animOffset)
+					{
+						anim.X = this.char.animOffsets.get(animOffset)[0];
+						anim.Y = this.char.animOffsets.get(animOffset)[1];
+					}
+				}
+			}
+
+		var data:String = haxe.Json.stringify(char);
+
+		if ((data != null) && (data.length > 0))
+		{
+			var file = new FileReference();
+
+			file.save(data, daAnim + '.json');
+		}
+	}
+
 	var _file:FileReference;
 
-	private function saveChar(saveString:String)
+	private function saveOffsets(saveString:String)
 	{
 		if ((saveString != null) && (saveString.length > 0))
 		{
@@ -301,5 +334,17 @@ class CharacterEditorState extends FlxState
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.error("Problem saving Level data");
+	}
+
+	function charTabShit()
+	{
+		var charUI = new FlxUI(null, UI_box);
+		charUI.name = 'Character';
+
+		var saveChar = new FlxButton(10, 30, 'Save Character', function()
+		{
+			saveChar();
+		});
+		charUI.add(saveChar);
 	}
 }
