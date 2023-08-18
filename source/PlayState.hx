@@ -882,7 +882,6 @@ class PlayState extends MusicBeatState
         timeBarTxt.setFormat(Paths.font("funkin.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (storyWeek == 6){
 			timeBarTxt.font = 'assets/fonts/pixel.otf';
-			timeBarTxt.scale.set(0.7, 0.7);
 		}
         timeBarTxt.screenCenter(X);
 		
@@ -1039,6 +1038,11 @@ class PlayState extends MusicBeatState
 		} 
 
 		super.create();
+
+		if (PreferencesMenu.getPref('middlescroll')) {
+			for (i in 0...4)
+			cpuStrums.members[i].visible = false;
+		}
 
 		#if sys
 		for (i in scripts)

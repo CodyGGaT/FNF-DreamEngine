@@ -35,7 +35,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('downscroll', 'downscroll');
 		createPrefItem('middlescroll', 'middlescroll');
 		createPrefItem('Reset Button', 'reset');
-		createPrefItem('Now Playing Bar', 'songbar');
+		// createPrefItem('Now Playing Bar', 'songbar');
 		createPrefItem('flashing menu', 'flashing-menu');
 		createPrefItem('Camera Zooming on Beat', 'camera-zoom');
 		createPrefItem('FPS Counter', 'fps-counter');
