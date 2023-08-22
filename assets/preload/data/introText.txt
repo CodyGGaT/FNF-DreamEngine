@@ -42,7 +42,7 @@ bonk--get in the discord call
 carpal tunnel--game design
 downscroll--i dont know what that is
 warning--choking hazard
-devin chat--what an honorable man
+dev in chat--holy crap
 kickstarter exclusive--intro text
 cussing--we have it
 github exclusive intro text--open source forever
@@ -55,3 +55,4 @@ catfishers--beware
 trans people--have rights
 cassette girl--exposed
 who killed--noob69
+lua is for kids--hscript is for adults

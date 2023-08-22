@@ -8,7 +8,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class ToolboxState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	var menuItems:Array<String> = ['Chart Editor', 'Character Editor'];
+	var menuItems:Array<String> = ['Chart Editor', 'Character Editor', 'Stage Editor'];
 	var curSelected:Int = 0;
 
 	override function create() {
@@ -47,9 +47,11 @@ class ToolboxState extends MusicBeatState {
 
 			switch (daSelected) {
 				case 'Chart Editor':
-					FlxG.switchState(new ChartingState());
+					FlxG.switchState(new editors.ChartingState());
 				case 'Character Editor':
-					FlxG.switchState(new CharacterEditorState('dad'));
+					FlxG.switchState(new editors.CharacterEditorState('dad'));
+				case 'Stage Editor': //brandon u better fucking code this shit
+					FlxG.switchState(new editors.StageEditorState());
 			}
 		}
 

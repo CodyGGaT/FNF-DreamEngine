@@ -42,12 +42,13 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('Heatlthbar Colors', 'heatlthbar-colors');
 		createPrefItem('Ghost Tapping', 'ghost-tapping');
 		createPrefItem('Botplay', 'botplay');
-		createPrefItem('Play As Opponent', 'opm');
+		//createPrefItem('Play As Opponent', 'opm');
 		createPrefItem('WaterMark', 'wm');
 		createPrefItem('Note Splashes', 'splash');
 		createPrefItem('Vanilla UI', 'oldui');
-		createPrefItem('Autoplay on Freeplay', 'apfp');
+		//createPrefItem('Autoplay on Freeplay', 'apfp');
 		createPrefItem('Song Position Bar', 'timebar');
+		createPrefItem('Cool Effects', 'coolfx');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -90,13 +91,14 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('heatlthbar-colors', true);
 		preferenceCheck('ghost-tapping', true);
 		preferenceCheck('botplay', false);
-		preferenceCheck('opm', false);
+		//preferenceCheck('opm', false);
 		preferenceCheck('wm', true);
 		preferenceCheck('splash', true);
 		preferenceCheck('oldui', false);
 		preferenceCheck('reset', true);
 		preferenceCheck('apfp', true);
 		preferenceCheck('timebar', false);
+		preferenceCheck('coolfx', true);
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);
@@ -123,8 +125,8 @@ class PreferencesMenu extends ui.OptionsState.Page
 			case 'TBool':
 				createCheckbox(prefString);
 
-			case 'IntThing':
-				trace(prefValue);
+			//case 'IntThing':
+				//trace(prefValue);
 
 			default:
 				trace('swag');
@@ -140,7 +142,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		add(checkbox);
 	}
 
-	function createIntThing(prefString:String){}
+	// function createIntThing(prefString:String){}
 
 	/**
 	 * Assumes that the preference has already been checked/set?

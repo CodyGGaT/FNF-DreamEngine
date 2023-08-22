@@ -227,7 +227,7 @@ class PlayState extends MusicBeatState
 		initDiscord();
 		#end
 
-		switch (SONG.stage)
+		switch (SONG.stage) // yo stage editor ima make u do it, figure out the idle bug, and fix up the unfinished middle scroll
 		{
 			case 'spooky':
 				curStage = "spooky";
@@ -307,9 +307,6 @@ class PlayState extends MusicBeatState
 					dancer.scrollFactor.set(0.4, 0.4);
 					grpLimoDancers.add(dancer);
 				}
-
-				var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
-				overlayShit.alpha = 0.5;
 
 				limo = new FlxSprite(-120, 550);
 				limo.frames = Paths.getSparrowAtlas('limo/limoDrive');
@@ -926,7 +923,7 @@ class PlayState extends MusicBeatState
 			scoreTxt.font = 'assets/fonts/pixel.otf';
 			scoreTxt.scale.set(0.7, 0.7);
 		}
-		
+
 	} else {
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1036,6 +1033,12 @@ class PlayState extends MusicBeatState
 					startCountdown();
 			}
 		} 
+
+		if (storyWeek == 4 && PreferencesMenu.getPref('coolfx')) {
+			var overlayShit:FlxSprite = new FlxSprite(-500, -600).loadGraphic(Paths.image('limo/limoOverlay'));
+			overlayShit.alpha = 0.5;	
+			add(overlayShit);
+		}
 
 		super.create();
 
@@ -1593,18 +1596,6 @@ class PlayState extends MusicBeatState
 				readySetGo(introSprPaths[swagCounter - 1]);
 			FlxG.sound.play(Paths.sound(introSndPaths[swagCounter]), 0.6);
 
-			/* switch (swagCounter)
-			{
-				case 0:
-					
-				case 1:
-					
-				case 2:
-					
-				case 3:
-					
-			} */
-
 			swagCounter += 1;
 		}, 4);
 		#if sys
@@ -1844,12 +1835,9 @@ class PlayState extends MusicBeatState
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
 
-			if (!isStoryMode)
-			{
-				babyArrow.y -= 10;
-				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
-			}
+			babyArrow.y -= 10;
+			babyArrow.alpha = 0;
+			FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 
 			babyArrow.ID = i;
 
@@ -2064,8 +2052,9 @@ class PlayState extends MusicBeatState
 			fcstuff = " | SDCB";
 			if (songMisses>9)
 			fcstuff = " | Clear";
-		if (!PreferencesMenu.getPref('oldui')){
-		scoreTxt.text = "Score: " + songScore + " | Misses:" + songMisses + fcstuff + " | Combo:" + combo;
+			
+		if (!PreferencesMenu.getPref('oldui')){ // oh yea i forgot u have 2 code the accuracy stuff
+		scoreTxt.text = "Score: " + songScore + " | Misses:" + songMisses + fcstuff;
 		} else {
 		scoreTxt.text = "Score:" + songScore;
 		}
@@ -2098,7 +2087,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			FlxG.switchState(new ChartingState());
+			FlxG.switchState(new editors.ChartingState());
 
 			#if discord_rpc
 			DiscordClient.changePresence("Chart Editor", null, null, true);
@@ -2135,23 +2124,11 @@ class PlayState extends MusicBeatState
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 
-		/* if (FlxG.keys.justPressed.NINE)
-			FlxG.switchState(new Charting()); */
-
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
 		if (FlxG.keys.justPressed.EIGHT)
 		{
-			/* 	 8 for opponent char
-			   SHIFT+8 for player char
-				 CTRL+SHIFT+8 for gf   */
-			if (FlxG.keys.pressed.SHIFT)
-				if (FlxG.keys.pressed.CONTROL)
-					FlxG.switchState(new CharacterEditorState(gf.curCharacter));
-				else 
-					FlxG.switchState(new CharacterEditorState(SONG.player1));
-			else
-				FlxG.switchState(new CharacterEditorState(SONG.player2));
+				FlxG.switchState(new editors.CharacterEditorState(SONG.player2));
 		}
 		
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
@@ -2860,7 +2837,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				for (shit in 0...pressArray.length)
-					if (pressArray[shit] && !PreferencesMenu.getPref('ghost-tapping'))
+					if (pressArray[shit])
 						noteMiss(shit);
 			}
 		}
@@ -2893,6 +2870,7 @@ class PlayState extends MusicBeatState
 
 	function noteMiss(direction:Int = 1):Void
 	{
+		if (!PreferencesMenu.getPref('ghost-tapping')){
 		// whole function used to be encased in if (!boyfriend.stunned)
 		health -= 0.04;
 		songMisses++;
@@ -2928,6 +2906,7 @@ class PlayState extends MusicBeatState
 		for (script in scripts)
 			script.callFunction('onMiss');
 		#end
+	}
 }
 
 	function goodNoteHit(note:Note):Void
@@ -3240,6 +3219,42 @@ class PlayState extends MusicBeatState
 			lightningStrikeShit();
 		}
 	}
+
+	function noteUpdate(daNote:Note) {
+        var targetY:Float;
+        var targetX:Float;
+
+        if (daNote.mustPress) {
+            targetY = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].y;
+            targetX = playerStrums.members[Math.floor(Math.abs(daNote.noteData))].x;
+        } else {
+            targetY = cpuStrums.members[Math.floor(Math.abs(daNote.noteData))].y;
+            targetX = cpuStrums.members[Math.floor(Math.abs(daNote.noteData))].x;
+        }
+
+        daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(PlayState.SONG.speed, 2)));
+        if (daNote.isSustainNote) {
+            if ((!daNote.mustPress || daNote.wasGoodHit || daNote.prevNote.wasGoodHit && !daNote.canBeHit)
+                && daNote.y + daNote.offset.y * daNote.scale.y <= (strumLine.y + Note.swagWidth / 2)) {
+                // Clip to strumline
+                var swagRect = new flixel.math.FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
+                swagRect.y = (targetY + Note.swagWidth / 2 - daNote.y) / daNote.scale.y;
+                swagRect.height -= swagRect.y;
+
+                daNote.clipRect = swagRect;
+            }
+        }
+
+        daNote.x = targetX;
+
+        if (daNote.tooLate) {
+            if (daNote.alpha > 0.3) {
+                noteMiss(daNote.noteData);
+                vocals.volume = 0;
+                daNote.alpha = 0.3;
+            }
+        }
+    }
 
 	var curLight:Int = 0;
 }
