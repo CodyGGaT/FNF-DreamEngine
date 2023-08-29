@@ -43,11 +43,6 @@
     },
     {
         "animName": "singDOWN", 
-        "anim": "GF Down Note",
-        "Y": -20
-    },
-    {
-        "animName": "singDOWN", 
         "anim": "GF Up Note",
         "Y": -20
     },

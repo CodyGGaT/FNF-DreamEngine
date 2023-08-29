@@ -346,5 +346,13 @@ class CharacterEditorState extends FlxState
 			saveChar();
 		});
 		charUI.add(saveChar);
+
+		var hpBar = new FlxSprite(110, 210).loadGraphic(Paths.image('healthBar'));
+		hpBar.scale.x = 0.3;
+		charUI.add(hpBar);
+
+		var hpBarFill = new FlxSprite(hpBar.x + 211.64, hpBar.y + 5).makeGraphic(177, 9, char.hpColor);
+		charUI.add(hpBarFill);
+
 	}
 }

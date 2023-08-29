@@ -65,6 +65,9 @@ class PlayState extends MusicBeatState
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
+	private var accuracy:Float = 100.0;
+	private var totalNotesHit:Float = 0;
+	private var totalPlayed:Int = 0;
 	public static var storyDifficulty:Int = 1;
 	public static var deathCounter:Int = 0;
 	public static var practiceMode:Bool = false;
@@ -161,7 +164,7 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var botplayTxt:FlxText;
 	var versionTxt:FlxText;
-	var fcstuff:String = " | FC";
+	var fcstuff:String = " FC";
 
 	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
@@ -1179,6 +1182,15 @@ class PlayState extends MusicBeatState
 	 * SOMETHING LIKE THIS
 	 */
 	// var cutsceneFunctions:Array<Dynamic> = [];
+	function updateAccuracy()
+	{
+		totalPlayed += 1;
+		accuracy = totalNotesHit / totalPlayed * 100;
+		if (accuracy >= 100)
+		{
+			accuracy = 100;
+		}
+	}
 
 	function stressIntro()
 	{
@@ -1892,6 +1904,12 @@ class PlayState extends MusicBeatState
 
 		super.openSubState(SubState);
 	}
+	function truncateFloat( number : Float, precision : Int): Float {
+		var num = number;
+		num = num * Math.pow(10, precision);
+		num = Math.round( num ) / Math.pow(10, precision);
+		return num;
+	    }
 
 	override function closeSubState()
 	{
@@ -2049,12 +2067,14 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		if (songMisses>0)
-			fcstuff = " | SDCB";
+			fcstuff = " SDCB";
 			if (songMisses>9)
-			fcstuff = " | Clear";
+			fcstuff = " Clear";
 			
 		if (!PreferencesMenu.getPref('oldui')){ // oh yea i forgot u have 2 code the accuracy stuff
-		scoreTxt.text = "Score: " + songScore + " | Misses:" + songMisses + fcstuff;
+		scoreTxt.text = "Score: " + songScore + " | Misses: " + songMisses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% - [" + fcstuff + " ] "; 
+		if (PreferencesMenu.getPref('combodisplay'))
+			scoreTxt.text = "Score: " + songScore + " | Misses: " + songMisses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% - [" + fcstuff + " ] " + " | Combo " + combo; 
 		} else {
 		scoreTxt.text = "Score:" + songScore;
 		}
@@ -2530,6 +2550,22 @@ class PlayState extends MusicBeatState
 
 		var isSick:Bool = true;
 
+		if (noteDiff > Conductor.safeZoneOffset * Conductor.shitZone){
+			daRating = 'shit';
+				totalNotesHit += 1 - Conductor.shitZone;
+			score = 50;
+		}
+		else if (noteDiff > Conductor.safeZoneOffset * Conductor.badZone){
+			daRating = 'bad';
+			score = 100;
+				totalNotesHit += 1 - Conductor.badZone;
+		}
+		else if (noteDiff > Conductor.safeZoneOffset * Conductor.goodZone){
+			daRating = 'good';
+				totalNotesHit += 1 - Conductor.goodZone;
+				score = 200;
+		}
+		
 		if (noteDiff > Conductor.safeZoneOffset * 0.9 && !PreferencesMenu.getPref('botplay'))
 		{
 			daRating = 'shit';
@@ -2871,7 +2907,6 @@ class PlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1):Void
 	{
 		if (!PreferencesMenu.getPref('ghost-tapping')){
-		// whole function used to be encased in if (!boyfriend.stunned)
 		health -= 0.04;
 		songMisses++;
 		killCombo();
@@ -2901,6 +2936,7 @@ class PlayState extends MusicBeatState
 			case 3:
 				boyfriend.playAnim('singRIGHTmiss', true);
 		}
+		updateAccuracy();
 
 		#if sys
 		for (script in scripts)
@@ -2957,7 +2993,9 @@ class PlayState extends MusicBeatState
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
+				updateAccuracy();
 			}
+
 		}
 	}
 

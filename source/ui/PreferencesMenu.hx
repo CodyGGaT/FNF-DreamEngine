@@ -35,7 +35,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		createPrefItem('downscroll', 'downscroll');
 		createPrefItem('middlescroll', 'middlescroll');
 		createPrefItem('Reset Button', 'reset');
-		// createPrefItem('Now Playing Bar', 'songbar');
+		createPrefItem('Now Playing Bar', 'songbar');
 		createPrefItem('flashing menu', 'flashing-menu');
 		createPrefItem('Camera Zooming on Beat', 'camera-zoom');
 		createPrefItem('FPS Counter', 'fps-counter');
@@ -81,9 +81,9 @@ class PreferencesMenu extends ui.OptionsState.Page
 		if (FlxG.save.data.preferences != null)
 			preferences = FlxG.save.data.preferences;
 
-		preferenceCheck('censor-naughty', true);
+		preferenceCheck('censor-naughty', false);
 		preferenceCheck('downscroll', false);
-		preferenceCheck('middlescroll', false);
+		//preferenceCheck('middlescroll', false);
 		preferenceCheck('flashing-menu', true);
 		preferenceCheck('camera-zoom', true);
 		preferenceCheck('fps-counter', true);
@@ -97,7 +97,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('oldui', false);
 		preferenceCheck('reset', true);
 		preferenceCheck('apfp', true);
-		preferenceCheck('timebar', false);
+		preferenceCheck('timebar', true);
 		preferenceCheck('coolfx', true);
 
 		if (!getPref('fps-counter'))

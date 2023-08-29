@@ -47,11 +47,6 @@
         "Y": -20
     },
     {
-        "animName": "singDOWN", 
-        "anim": "GF Up Note",
-        "Y": -20
-    },
-    {
         "animName": "hairBlow", 
         "anim": "GF Dancing Beat Hair blowing",
         "X": 45,

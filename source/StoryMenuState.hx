@@ -88,6 +88,9 @@ class StoryMenuState extends MusicBeatState
 
 	var script:HScript;
 
+	var blackBarThingie:FlxSprite;
+	var rankText:FlxText;
+
 	override function create()
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
@@ -122,7 +125,7 @@ class StoryMenuState extends MusicBeatState
 		txtWeekTitle.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
 
-		var rankText:FlxText = new FlxText(0, 10);
+		rankText = new FlxText(0, 10);
 		rankText.text = 'RANK: GREAT';
 		rankText.setFormat(Paths.font("funkin.ttf"), 32);
 		rankText.size = scoreText.size;
@@ -138,7 +141,7 @@ class StoryMenuState extends MusicBeatState
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
 
-		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
+		blackBarThingie = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
 		add(blackBarThingie);
 
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();

@@ -30,7 +30,6 @@ typedef CharLoader = {
 	var hpColor:String;
 	var X:Float;
 	var Y:Float;
-	var GFChar:Bool;
 	var flipX:Bool;
 	}
 
@@ -396,15 +395,12 @@ class Character extends FlxSprite
 			switch (curCharacter)
 			{
 				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel' | 'gf-tankmen':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
 						danced = !danced;
 
 						if (danced)
 							playAnim('danceRight');
 						else
 							playAnim('danceLeft');
-					}
 
 				case 'pico-speaker':
 				// lol weed

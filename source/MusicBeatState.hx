@@ -1,6 +1,6 @@
 package;
 
-import Conductor.BPMChangeEvent;
+import Conductor;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.addons.transition.FlxTransitionableState;

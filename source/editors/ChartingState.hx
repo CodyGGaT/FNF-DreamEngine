@@ -82,6 +82,7 @@ class ChartingState extends MusicBeatState
 
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
+	var gradient:FlxColor;
 	
 	override function create()
 	{
@@ -94,7 +95,6 @@ class ChartingState extends MusicBeatState
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = true;
-		bg.color = 0xFF0000ff;
 		add(bg);
 
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);

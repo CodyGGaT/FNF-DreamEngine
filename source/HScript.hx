@@ -65,6 +65,7 @@ class HScript {
                 "FlxBackdrop" => flixel.addons.display.FlxBackdrop,
         
                 "Paths" => Paths,
+                "CustomState" => CustomState,
                 "Conductor" => Conductor,
                 "PlayState" => PlayState,
                 "MusicBeatState" => MusicBeatState,
