@@ -262,15 +262,6 @@ class FreeplayState extends MusicBeatState
 
 		// adjusting the highscore song name to be compatible (changeDiff)
 		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-		switch (songHighscore)
-		{
-			case 'Dad-Battle':
-				songHighscore = 'Dadbattle';
-			case 'Philly-Nice':
-				songHighscore = 'Philly';
-			case 'M.I.L.F':
-				songHighscore = 'Milf';
-		}
 
 		trace(curDifficulty);
 	}
@@ -297,15 +288,6 @@ class FreeplayState extends MusicBeatState
 		// adjusting the highscore song name to be compatible (changeSelection)
 		// would read original scores if we didn't change packages
 		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-		switch (songHighscore)
-		{
-			case 'Dad-Battle':
-				songHighscore = 'Dadbattle';
-			case 'Philly-Nice':
-				songHighscore = 'Philly';
-			case 'M.I.L.F':
-				songHighscore = 'Milf';
-		}
 
 		// selector.y = (70 * curSelected) + 30;
 

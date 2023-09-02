@@ -34,9 +34,20 @@ class PauseSubState extends MusicBeatSubstate
 
 	var practiceText:FlxText;
 
+	var script:HScript;
+
 	public function new(x:Float, y:Float)
 	{
 		super();
+
+		script = new HScript('substates/PauseSubstate');
+
+		if (!script.isBlank && script.expr != null)
+		{
+			script.interp.scriptObject = this;
+			script.setValue('add', add);
+			script.interp.execute(script.expr);
+		}
 
 		menuItems = pauseOG;
 
@@ -50,6 +61,10 @@ class PauseSubState extends MusicBeatSubstate
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);
+
+		#if sys
+		script.callFunction('create');
+		#end
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.song;
@@ -96,6 +111,10 @@ class PauseSubState extends MusicBeatSubstate
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
+		#if sys
+		script.callFunction('createPost');
+		#end
+
 		regenMenu();
 
 		// cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
@@ -103,6 +122,10 @@ class PauseSubState extends MusicBeatSubstate
 
 	private function regenMenu():Void
 	{
+		#if sys
+		script.callFunction('regenMenu');
+		#end
+
 		while (grpMenuShit.members.length > 0)
 		{
 			grpMenuShit.remove(grpMenuShit.members[0], true);
@@ -117,6 +140,11 @@ class PauseSubState extends MusicBeatSubstate
 		}
 
 		curSelected = 0;
+
+		#if sys
+		script.callFunction('regenMenuPost');
+		#end
+
 		changeSelection();
 	}
 
@@ -124,6 +152,10 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
+
+		#if sys
+		script.callFunction('update', [elapsed]);
+		#end
 
 		super.update(elapsed);
 
@@ -183,6 +215,10 @@ class PauseSubState extends MusicBeatSubstate
 			// for reference later!
 			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
 		}
+
+		#if sys
+		script.callFunction('updatePost', [elapsed]);
+		#end
 	}
 
 	override function destroy()
@@ -195,6 +231,10 @@ class PauseSubState extends MusicBeatSubstate
 	function changeSelection(change:Int = 0):Void
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		#if sys
+		script.callFunction('changeSelection');
+		#end
 
 		curSelected += change;
 
@@ -219,5 +259,9 @@ class PauseSubState extends MusicBeatSubstate
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+
+		#if sys
+		script.callFunction('changeSelectionPost');
+		#end
 	}
 }

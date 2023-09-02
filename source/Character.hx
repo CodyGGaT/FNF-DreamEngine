@@ -28,9 +28,8 @@ typedef CharLoader = {
 	var img:String;
 	var anims:Array<AnimLoader>;
 	var hpColor:String;
-	var X:Float;
-	var Y:Float;
 	var flipX:Bool;
+	//var positions:Array<Float>;
 	}
 
 class Character extends FlxSprite
@@ -221,7 +220,10 @@ class Character extends FlxSprite
 				antialiasing = false;
 			
 			default:
-				Char = Json.parse(Assets.getText(Paths.json('characters/' + curCharacter)));
+				if (!Assets.exists(Paths.json('characters/' + curCharacter)))
+					Char = Json.parse(Assets.getText(Paths.json('characters/' + 'dad')));
+				else
+					Char = Json.parse(Assets.getText(Paths.json('characters/' + curCharacter)));
 
 				tex = Paths.getSparrowAtlas('characters/${Char.img}');
 				frames = tex;
@@ -239,7 +241,7 @@ class Character extends FlxSprite
 				animation.addByPrefix(anim.animName, anim.anim, anim.fps, anim.looped);
 				addOffset(anim.animName, anim.X, anim.Y);
 				}
-				
+
 				hpColor = FlxColor.fromString(Char.hpColor);
 				playAnim('idle');
 			}
