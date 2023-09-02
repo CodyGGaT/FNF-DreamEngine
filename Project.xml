@@ -123,6 +123,7 @@
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
+	<haxelib name="hxcpp" />
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
     <haxedef name="HXCPP_STACK_LINE" if="release" />
