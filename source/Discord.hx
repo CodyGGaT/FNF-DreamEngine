@@ -7,6 +7,7 @@ using StringTools;
 #if discord_rpc
 import discord_rpc.DiscordRpc;
 #end
+import ui.PreferencesMenu;
 
 class DiscordClient
 {
@@ -39,12 +40,14 @@ class DiscordClient
 	
 	static function onReady()
 	{
+		if (PreferencesMenu.getPref('rpc')){
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
 			largeImageKey: 'icon',
 			largeImageText: "Friday Night Funkin': Dream Engine"
 		});
+		}
 	}
 
 	static function onError(_code:Int, _message:String)
@@ -74,7 +77,7 @@ class DiscordClient
 		{
 			endTimestamp = startTimestamp + endTimestamp;
 		}
-
+		if (PreferencesMenu.getPref('rpc')){
 		DiscordRpc.presence({
 			details: details,
 			state: state,
@@ -85,6 +88,7 @@ class DiscordClient
 			startTimestamp: Std.int(startTimestamp / 1000),
 			endTimestamp: Std.int(endTimestamp / 1000)
 		});
+		}
 
 		// trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}

@@ -31,6 +31,11 @@ class MainMenuState extends MusicBeatState {
 	var script:HScript;
 
 	override function create() {
+		#if discord_rpc
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Main Menu", null);
+		#end
+
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 

@@ -5,6 +5,9 @@ import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 class ToolboxState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
@@ -12,6 +15,11 @@ class ToolboxState extends MusicBeatState {
 	var curSelected:Int = 0;
 
 	override function create() {
+		#if discord_rpc
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Toolbox", null);
+		#end
+
 		var bg:FlxSprite = new FlxSprite(-80, 0, Paths.image("menuDesat"));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0;

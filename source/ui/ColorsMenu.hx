@@ -5,6 +5,9 @@ import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxOutlineEffect;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxColor;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 using StringTools;
 

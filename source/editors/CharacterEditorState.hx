@@ -15,6 +15,9 @@ import openfl.events.IOErrorEvent;
 import openfl.net.FileReference;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUI;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 using StringTools;
 
@@ -43,6 +46,11 @@ class CharacterEditorState extends FlxState
 
 	override function create()
 	{
+		#if discord_rpc
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Character Editor", null);
+		#end
+
 		FlxG.sound.music.stop();
 
 		FlxG.mouse.visible = true;

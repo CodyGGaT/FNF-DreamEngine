@@ -10,6 +10,9 @@ import sys.io.File;
 #end
 import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 class ModMenu extends Page
 {

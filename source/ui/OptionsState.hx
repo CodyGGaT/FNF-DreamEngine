@@ -6,6 +6,9 @@ import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxSignal;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 // typedef OptionsState = OptionsMenu_old;
 // class OptionsState_new extends MusicBeatState
@@ -21,6 +24,11 @@ class OptionsState extends MusicBeatState
 
 	override function create()
 	{
+		#if discord_rpc
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Options Menu", null);
+		#end
+
 		var menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.color = 0xff2c2c2c;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

@@ -9,6 +9,9 @@ import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
 import ui.AtlasText.AtlasFont;
 import ui.TextMenuList.TextMenuItem;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 class PreferencesMenu extends ui.OptionsState.Page
 {
@@ -49,6 +52,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		//createPrefItem('Autoplay on Freeplay', 'apfp');
 		createPrefItem('Song Position Bar', 'timebar');
 		createPrefItem('Cool Effects', 'coolfx');
+		createPrefItem('Discord RPC', 'rpc');
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -99,6 +103,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('apfp', true);
 		preferenceCheck('timebar', true);
 		preferenceCheck('coolfx', true);
+		preferenceCheck('rpc', true);
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);

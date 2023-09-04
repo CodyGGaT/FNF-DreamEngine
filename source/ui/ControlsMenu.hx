@@ -12,6 +12,9 @@ import flixel.input.keyboard.FlxKey;
 import ui.AtlasText;
 import ui.MenuList;
 import ui.TextMenuList;
+#if discord_rpc
+import Discord.DiscordClient;
+#end
 
 class ControlsMenu extends ui.OptionsState.Page
 {
