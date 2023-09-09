@@ -36,7 +36,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 		createPrefItem('naughtyness', 'censor-naughty');
 		createPrefItem('downscroll', 'downscroll');
-		createPrefItem('middlescroll', 'middlescroll');
+		//createPrefItem('middlescroll', 'middlescroll');
 		createPrefItem('Reset Button', 'reset');
 		createPrefItem('Now Playing Bar', 'songbar');
 		createPrefItem('flashing menu', 'flashing-menu');
@@ -100,7 +100,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('splash', true);
 		preferenceCheck('oldui', false);
 		preferenceCheck('reset', true);
-		preferenceCheck('apfp', true);
+		//preferenceCheck('apfp', true);
 		preferenceCheck('timebar', true);
 		preferenceCheck('coolfx', true);
 		preferenceCheck('rpc', true);

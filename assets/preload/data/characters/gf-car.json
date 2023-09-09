@@ -1,5 +1,6 @@
 {
     "img": "gfCar",
+    "positions": [0, 0],
     "hpColor": "#a5004d",
     "anims": [
     {

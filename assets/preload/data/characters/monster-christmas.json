@@ -1,5 +1,6 @@
 {
     "img": "monsterChristmas",
+    "positions": [0, 0],
     "hpColor": "#f3ff6e",
     "X": 0,
     "Y": 130,

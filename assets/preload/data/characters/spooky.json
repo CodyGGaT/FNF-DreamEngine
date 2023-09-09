@@ -1,5 +1,6 @@
 {
     "img": "spooky_kids_assets",
+    "positions": [0, 0],
     "hpColor": "#d57e00",
     "anims": [
         {

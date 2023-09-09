@@ -607,6 +607,8 @@ class PlayState extends MusicBeatState
 		}
 
 		dad = new Character(100, 100, SONG.player2);
+		dad.x += dad.Char.positions[0];
+		dad.y += dad.Char.positions[1];
 
 		camPos = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
@@ -646,6 +648,8 @@ class PlayState extends MusicBeatState
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
+		boyfriend.x += boyfriend.Char.positions[0];
+		boyfriend.y += boyfriend.Char.positions[1];
 
 		// REPOSITIONING PER STAGE
 		switch (curStage)
@@ -1103,7 +1107,7 @@ class PlayState extends MusicBeatState
 					// play sound
 					FlxG.sound.play(Paths.sound('bfBeep'), function()
 					{
-						boyfriend.playAnim('idle');
+						boyfriend.dance();
 					});
 				});
 
@@ -1618,7 +1622,7 @@ class PlayState extends MusicBeatState
 			if (swagCounter % 2 == 0)
 			{
 				if (!boyfriend.animation.curAnim.name.startsWith("sing"))
-					boyfriend.playAnim('idle');
+					boyfriend.dance();
 				if (!dad.animation.curAnim.name.startsWith("sing"))
 					dad.dance();
 			}
@@ -2393,37 +2397,39 @@ class PlayState extends MusicBeatState
 					// noteMiss = daNote.y > FlxG.height;
 
 				if (daNote.isSustainNote && daNote.wasGoodHit)
-				{
-					if ((!PreferencesMenu.getPref('downscroll') && daNote.y < -daNote.height)
-						|| (PreferencesMenu.getPref('downscroll') && daNote.y > FlxG.height))
-					{
-						daNote.active = false;
-						daNote.visible = false;
+                {
+                    if ((!PreferencesMenu.getPref('downscroll') && daNote.y < -daNote.height)
+                        || (PreferencesMenu.getPref('downscroll') && daNote.y > FlxG.height))
+                    {
+                        daNote.active = false;
+                        daNote.visible = false;
 
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}
-				}
-				else if (daNote.tooLate || daNote.wasGoodHit)
-				{
-					if (daNote.tooLate)
-					{
-						health -= 0.0475;
-						songMisses++;
-						vocals.volume = 0;
-						killCombo();
-					}
+                        daNote.kill();
+                        notes.remove(daNote, true);
+                        daNote.destroy();
+                    }
+                }
+                else if (daNote.tooLate || daNote.wasGoodHit)
+                {
+                    if (daNote.tooLate)
+                    {
+                        noteMiss(daNote.noteData);
 
-					daNote.active = false;
-					daNote.visible = false;
+                        #if sys
+                        for (script in scripts)
+                            script.callFunction('noteMiss', [daNote]);
+                        #end
+                    }
 
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
-				}
-			});
-		}
+                    daNote.active = false;
+                    daNote.visible = false;
+
+                    daNote.kill();
+                    notes.remove(daNote, true);
+                    daNote.destroy();
+                }
+            });
+        }
 
 		if (!inCutscene)
 			keyShit();
@@ -2792,7 +2798,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	private function keyShit():Void
+	public function keyShit():Void
 	{
 		// control arrays, order L D R U
 		var holdArray:Array<Bool> = [controls.NOTE_LEFT, controls.NOTE_DOWN, controls.NOTE_UP, controls.NOTE_RIGHT];
@@ -2874,7 +2880,7 @@ class PlayState extends MusicBeatState
 			{
 				for (shit in 0...pressArray.length)
 				{ // if a direction is hit that shouldn't be
-					if (pressArray[shit] && !directionList.contains(shit))
+					if (pressArray[shit] && !directionList.contains(shit) && !PreferencesMenu.getPref('ghost-tapping'))
 						noteMiss(shit);
 				}
 				for (coolNote in possibleNotes)
@@ -2886,7 +2892,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				for (shit in 0...pressArray.length)
-					if (pressArray[shit])
+					if (pressArray[shit] && !PreferencesMenu.getPref('ghost-tapping'))
 						noteMiss(shit);
 			}
 		}
@@ -2895,7 +2901,7 @@ class PlayState extends MusicBeatState
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
-				boyfriend.playAnim('idle');
+				boyfriend.dance();
 			}
 		}
 
@@ -2919,7 +2925,6 @@ class PlayState extends MusicBeatState
 
 	function noteMiss(direction:Int = 1):Void
 	{
-		if (!PreferencesMenu.getPref('ghost-tapping')){
 		health -= 0.04;
 		songMisses++;
 		killCombo();
@@ -2930,14 +2935,7 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 
-		/* boyfriend.stunned = true;
-
-		// get stunned for 5 seconds
-		new FlxTimer().start(5 / 60, function(tmr:FlxTimer)
-		{
-			boyfriend.stunned = false;
-		}); */
-
+		
 		switch (direction)
 		{
 			case 0:
@@ -2955,7 +2953,6 @@ class PlayState extends MusicBeatState
 		for (script in scripts)
 			script.callFunction('onMiss');
 		#end
-	}
 }
 
 	function goodNoteHit(note:Note):Void
@@ -3202,7 +3199,7 @@ class PlayState extends MusicBeatState
 		if (curBeat % 2 == 0)
 		{
 			if (!boyfriend.animation.curAnim.name.startsWith("sing"))
-				boyfriend.playAnim('idle');
+				boyfriend.dance();
 			if (!dad.animation.curAnim.name.startsWith("sing"))
 				dad.dance();
 		}

@@ -29,7 +29,7 @@ typedef CharLoader = {
 	var anims:Array<AnimLoader>;
 	var hpColor:String;
 	var flipX:Bool;
-	//var positions:Array<Float>;
+	var positions:Array<Float>;
 	}
 
 class Character extends FlxSprite

@@ -1,6 +1,7 @@
 {
     "img": "DADDY_DEAREST",
     "hpColor": "#af66ce",
+    "positions": [0, 0],
     "anims": [
         {
             "animName": "idle", 

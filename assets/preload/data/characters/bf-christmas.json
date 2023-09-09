@@ -1,6 +1,7 @@
 {
     "img": "bfChristmas",
     "flipX": true,
+    "positions": [0, 0],
     "hpColor": "#31b0d1",
     "anims": [
     {

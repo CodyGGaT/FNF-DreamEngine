@@ -1,6 +1,7 @@
 {
     "img": "Pico_FNF_assetss",
     "flipX": true,
+    "positions": [0, 0],
     "hpColor": "#b7d855",
     "anims": [
     {

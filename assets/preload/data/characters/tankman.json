@@ -1,6 +1,7 @@
 {
     "img": "tankmanCaptain",
     "flipX": true,
+    "positions": [0, 0],
     "hpColor": "#FBAA25",
     "anims": [
     {

@@ -1,5 +1,6 @@
 {
     "img": "Mom_Assets",
+    "positions": [0, 0],
     "hpColor": "#d8558e",
     "anims": [
         {

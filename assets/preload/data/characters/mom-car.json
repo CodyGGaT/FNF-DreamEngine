@@ -1,5 +1,6 @@
 {
     "img": "momCar",
+    "positions": [0, 0],
     "hpColor": "#d8558e",
     "anims": [
         {
