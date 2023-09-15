@@ -38,19 +38,15 @@ class HealthIcon extends FlxSprite
 			changeIcon(PlayState.SONG.player1);
 	}
 
-	public function changeIcon(newChar:String):Void
-	{
-		if (newChar != 'bf-pixel' && newChar != 'bf-old' && newChar != 'senpai-angry' && newChar != 'bf-holding-gf')
+	public function changeIcon(newChar:String):Void {
+		if (newChar != 'bf-pixel' && newChar != 'bf-old' && newChar != 'senpai-angry' && newChar != 'bf-holding-gf') {
 			newChar = newChar.split('-')[0].trim();
-
-		if (newChar != char)
-		{
-			if (animation.getByName(newChar) == null)
-			{
-				if (Assets.exists(Paths.image('icons/icon-' + newChar)))
-					loadGraphic(Paths.image('icons/icon-' + newChar), true, 150, 150);
-				else
-					loadGraphic(Paths.image('icons/icon-face'), true, 150, 150);
+		}
+	
+		if (newChar != char) {
+			if (animation.getByName(newChar) == null) {
+				var imagePath:String = Assets.exists(Paths.image('icons/icon-' + newChar)) ? 'icons/icon-' + newChar : 'icons/icon-face';
+				loadGraphic(Paths.image(imagePath), true, 150, 150);
 				animation.add(newChar, [0, 1], 0, false, isPlayer);
 			}
 			animation.play(newChar);

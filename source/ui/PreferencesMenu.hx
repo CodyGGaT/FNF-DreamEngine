@@ -36,7 +36,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 		createPrefItem('naughtyness', 'censor-naughty');
 		createPrefItem('downscroll', 'downscroll');
-		//createPrefItem('middlescroll', 'middlescroll');
+		createPrefItem('middlescroll', 'middlescroll');
 		createPrefItem('Reset Button', 'reset');
 		createPrefItem('Now Playing Bar', 'songbar');
 		createPrefItem('flashing menu', 'flashing-menu');
@@ -87,7 +87,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 
 		preferenceCheck('censor-naughty', false);
 		preferenceCheck('downscroll', false);
-		//preferenceCheck('middlescroll', false);
+		preferenceCheck('middlescroll', false);
 		preferenceCheck('flashing-menu', true);
 		preferenceCheck('camera-zoom', true);
 		preferenceCheck('fps-counter', true);
