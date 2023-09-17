@@ -875,6 +875,12 @@ class PlayState extends MusicBeatState
 			add(timeBarTxt);
 		}
 
+		if (PreferencesMenu.getPref('downscroll')) {
+	            timeBarBG.y = FlxG.height * 0.9;
+          	    timeBar.y = FlxG.height * 0.9;
+        	    timeBarTxt.y = FlxG.height * 0.9;
+        	}
+
 		if (Assets.exists(Paths.txt(SONG.song.toLowerCase() + "/info")) && PreferencesMenu.getPref('songbar'))
 		{
 			cred = new SongCredBar(0, 144, SONG.song.toLowerCase());
