@@ -2319,16 +2319,10 @@ class PlayState extends MusicBeatState
 						vocals.volume = 1;
 
 					cpuStrums.members[daNote.noteData].animation.play('confirm', true);
-                    if (!daNote.isSustainNote)
-                    {
-                        cpuStrums.members[daNote.noteData].centerOffsets();
-                        cpuStrums.members[daNote.noteData].offset.x -= 13;
-                        cpuStrums.members[daNote.noteData].offset.y -= 10;
-                    } else {
-						cpuStrums.members[daNote.noteData].centerOffsets();
-						cpuStrums.members[daNote.noteData].offset.x -= 13;
-						cpuStrums.members[daNote.noteData].offset.y -= 10;
-					}
+
+					cpuStrums.members[daNote.noteData].centerOffsets();
+					cpuStrums.members[daNote.noteData].offset.x -= 13;
+					cpuStrums.members[daNote.noteData].offset.y -= 10;
 
 					daNote.kill();
 					notes.remove(daNote, true);
